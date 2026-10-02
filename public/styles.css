@@ -1,0 +1,268 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
+    #0F172A;
+  min-height: 100vh;
+}
+/* ---------- Runtime Host banner ---------- */
+.host-banner {
+  background: rgba(245, 158, 11, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+  animation: bannerFade 0.35s ease both;
+}
+@keyframes bannerFade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ---------- Live video element ---------- */
+#phone-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  border-radius: inherit;
+}
+/* ---------- Glassmorphic panel (subtle hover) ---------- */
+.glass-panel {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.glass-panel:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+/* ---------- Glow button ---------- */
+.glow-button {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.35);
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.glow-button:hover:not(:disabled) {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.55);
+}
+.glow-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+/* ---------- Disabled in-flight states ---------- */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button {
+  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
+}
+/* ---------- Loading overlay ---------- */
+.loading-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+.loading-overlay:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* ---------- Status dots & pulse ---------- */
+.pulse-dot {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+/* ---------- Provisioning / connecting pulse (blue) ---------- */
+.pulse-blue {
+  animation: pulseBlue 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulseBlue {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.55);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+  }
+}
+/* ---------- Watchdog status indicator ---------- */
+.status-indicator {
+  box-shadow: 0 0 6px currentColor;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+.status-indicator.ping {
+  animation: watchdogPing 0.8s cubic-bezier(0.4, 0, 0.6, 1);
+}
+@keyframes watchdogPing {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  100% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+/* ---------- Health bars (emerald → blue gradient) ---------- */
+.health-bar {
+  background: linear-gradient(90deg, #10B981, #3B82F6);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+}
+/* ---------- Loading spinner ---------- */
+.loading-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid rgba(51, 65, 85, 0.8);
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* ---------- View transitions ---------- */
+.view {
+  animation: viewFade 0.35s ease both;
+}
+@keyframes viewFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ---------- Skeleton shimmer ---------- */
+.skeleton {
+  background: linear-gradient(90deg, rgba(30, 41, 59, 0.6) 25%, rgba(51, 65, 85, 0.6) 50%, rgba(30, 41, 59, 0.6) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 0.5rem;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+/* ---------- Toast ---------- */
+.toast {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(51, 65, 85, 1);
+  backdrop-filter: blur(8px);
+  animation: toastIn 0.25s ease both;
+}
+.toast.success { border-color: rgba(16, 185, 129, 0.5); }
+.toast.error { border-color: rgba(239, 68, 68, 0.5); }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(1rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.toast.leaving {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+  transform: translateX(1rem);
+}
+/* ---------- ADB Console / terminal ---------- */
+.console-output {
+  background: rgba(2, 6, 23, 0.7);
+  scrollbar-width: thin;
+}
+.terminal-line {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+  color: #94a3b8;
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.15);
+  animation: terminalIn 0.2s ease both;
+  word-break: break-word;
+}
+@keyframes terminalIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.terminal-line-success { color: #34d399; }
+.terminal-line-error { color: #f87171; }
+.terminal-ts {
+  color: #475569;
+  user-select: none;
+}
+.terminal-prompt {
+  color: #3B82F6;
+  font-weight: 700;
+}
+/* ---------- APK Repository: package cards ---------- */
+.package-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.package-card:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+/* Install state colors */
+.package-card.state-pending { border-left: 3px solid #64748b; }
+.package-card.state-installing {
+  border-left: 3px solid #3B82F6;
+  animation: installPulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes installPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(59, 130, 246, 0); }
+}
+.package-card.state-installed { border-left: 3px solid #10B981; }
+/* ---------- Badge utility ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: rgba(51, 65, 85, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.9);
+  color: #cbd5e1;
+}
+.badge.version { color: #93c5fd; }
+.badge.size { color: #a5b4fc; }
+.badge.state-pending { color: #94a3b8; }
+.badge.state-installing {
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.5);
+}
+.badge.state-installed {
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.1);
+}
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .health-bar {
+    height: 0.375rem;
+  }
+  .terminal-line {
+    font-size: 10px;
+  }
+}
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0F172A; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }

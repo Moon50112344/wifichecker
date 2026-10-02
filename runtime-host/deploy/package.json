@@ -1,0 +1,16 @@
+{
+  "name": "aetherdroid-runtime-host",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.17.0",
+    "node-datachannel": "^0.13.0"
+  }
+}

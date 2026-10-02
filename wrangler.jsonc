@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aetherdroid-lnukl02kel3ita2vy4bw8",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-04-24",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  }
+}
