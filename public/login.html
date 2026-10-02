@@ -469,9 +469,6 @@
     <div class="toast" id="toast"></div>
     
     <script type="module">
-        // ============================================================
-        // ===== FIREBASE CONFIG — Đảm bảo đúng config của bạn =====
-        // ============================================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getAuth, setPersistence, browserLocalPersistence, browserSessionPersistence,
                  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
@@ -493,7 +490,6 @@
         const googleProvider = new GoogleAuthProvider();
         const facebookProvider = new FacebookAuthProvider();
 
-        // ===== DOM Elements =====
         const form = document.getElementById('loginForm');
         const btnLogin = document.getElementById('btnLogin');
         const btnText = btnLogin.querySelector('.btn-text');
@@ -517,9 +513,9 @@
         const pageTagline = document.getElementById('pageTagline');
         const loginRow = document.getElementById('loginRow');
 
-        let mode = 'login'; // 'login' | 'register'
+        let mode = 'login';
+        let hasRedirected = false; // Ngăn chuyển lặp nhiều lần
 
-        // ===== Toast =====
         let toastTimer;
         function showToast(msg, type) {
             toast.textContent = msg;
@@ -530,7 +526,6 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== Hiện/ẩn mật khẩu =====
         togglePass.addEventListener('click', () => {
             const isPass = passInput.type === 'password';
             passInput.type = isPass ? 'text' : 'password';
@@ -540,7 +535,6 @@
             eyeOff.style.display = isPass ? '' : 'none';
         });
 
-        // ===== Validation =====
         function clearErrors() {
             [emailInput, passInput, confirmInput].forEach(i => i.classList.remove('field-error'));
             [emailError, passError, confirmError].forEach(e => { e.textContent = ''; e.classList.remove('show'); });
@@ -554,28 +548,21 @@
         }
         function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-        // ===== Ghi nhớ email =====
         const savedEmail = localStorage.getItem('saved_email');
         if (savedEmail) {
             emailInput.value = savedEmail;
             rememberCheck.checked = true;
         }
 
-        // ===== Loading state =====
         function setLoading(isLoading) {
             btnLogin.disabled = isLoading;
             btnLogin.classList.toggle('loading', isLoading);
             btnText.textContent = isLoading ? 'Đang xử lý...' : (mode === 'register' ? 'Đăng ký tài khoản' : 'Đăng nhập');
         }
 
-        // ===== Chuyển chế độ Đăng nhập / Đăng ký =====
         function switchMode(newMode) {
             mode = newMode;
             clearErrors();
-            emailInput.classList.remove('field-error');
-            passInput.classList.remove('field-error');
-            confirmInput.classList.remove('field-error');
-            
             if (mode === 'register') {
                 pageTagline.textContent = 'Tạo tài khoản mới';
                 modeText.textContent = 'Đã có tài khoản? ';
@@ -601,7 +588,6 @@
             switchMode(mode === 'login' ? 'register' : 'login');
         });
 
-        // ===== Map lỗi Firebase sang tiếng Việt =====
         function mapAuthError(code) {
             switch (code) {
                 case 'auth/invalid-email': return 'Email không hợp lệ';
@@ -612,20 +598,18 @@
                 case 'auth/invalid-credential': return 'Sai email hoặc mật khẩu';
                 case 'auth/too-many-requests': return 'Quá nhiều lần thử. Vui lòng thử lại sau vài giờ hoặc đổi mạng.';
                 case 'auth/network-request-failed': return 'Lỗi mạng. Kiểm tra kết nối internet.';
-                case 'auth/operation-not-allowed': return 'Chưa bật phương thức đăng nhập này trong Firebase Console';
+                case 'auth/operation-not-allowed': return 'Chưa bật Email/Password trong Firebase Console';
                 case 'auth/weak-password': return 'Mật khẩu quá yếu — tối thiểu 6 ký tự';
                 case 'auth/email-already-in-use': return 'Email này đã được đăng ký';
                 case 'auth/popup-blocked': return 'Trình duyệt chặn cửa sổ đăng nhập. Vui lòng cho phép popup.';
-                case 'auth/popup-closed-by-user': return ''; // người dùng tự đóng, không báo lỗi
+                case 'auth/popup-closed-by-user': return '';
                 default: return 'Đã có lỗi xảy ra. Vui lòng thử lại.';
             }
         }
 
-        // ===== Submit form =====
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearErrors();
-
             const email = emailInput.value.trim();
             const password = passInput.value;
             const confirmPass = confirmInput.value;
@@ -633,20 +617,16 @@
 
             if (!email) { showFieldError('email', 'Vui lòng nhập email'); valid = false; }
             else if (!isValidEmail(email)) { showFieldError('email', 'Email không hợp lệ'); valid = false; }
-            
             if (!password) { showFieldError('password', 'Vui lòng nhập mật khẩu'); valid = false; }
             else if (password.length < 6) { showFieldError('password', 'Mật khẩu tối thiểu 6 ký tự'); valid = false; }
-            
             if (mode === 'register') {
                 if (!confirmPass) { showFieldError('confirmPassword', 'Vui lòng xác nhận mật khẩu'); valid = false; }
                 else if (password !== confirmPass) { showFieldError('confirmPassword', 'Mật khẩu không khớp'); valid = false; }
             }
-            
             if (!valid) return;
 
             setLoading(true);
             try {
-                // Ghi nhớ đăng nhập
                 const persistence = rememberCheck.checked ? browserLocalPersistence : browserSessionPersistence;
                 await setPersistence(auth, persistence);
 
@@ -655,14 +635,14 @@
                     await sendEmailVerification(userCred.user);
                     if (rememberCheck.checked) localStorage.setItem('saved_email', email);
                     else localStorage.removeItem('saved_email');
-                    showToast('Đăng ký thành công! Email xác minh đã được gửi. Kiểm tra cả thư rác.', 'success');
+                    showToast('Đăng ký thành công! Kiểm tra email + thư rác để xác minh.', 'success');
                     switchMode('login');
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
                     if (rememberCheck.checked) localStorage.setItem('saved_email', email);
                     else localStorage.removeItem('saved_email');
                     showToast('Đăng nhập thành công', 'success');
-                    // Chuyển đến Dashboard
+                    hasRedirected = true;
                     window.location.href = '/dashboard';
                 }
                 passInput.value = '';
@@ -675,7 +655,6 @@
             }
         });
 
-        // ===== Quên mật khẩu =====
         forgotLink.addEventListener('click', async (e) => {
             e.preventDefault();
             const email = emailInput.value.trim();
@@ -692,13 +671,13 @@
             }
         });
 
-        // ===== Đăng nhập Google =====
         googleBtn.addEventListener('click', async () => {
             try {
                 googleBtn.disabled = true;
                 facebookBtn.disabled = true;
                 await signInWithPopup(auth, googleProvider);
                 showToast('Đăng nhập Google thành công', 'success');
+                hasRedirected = true;
                 window.location.href = '/dashboard';
             } catch (err) {
                 const msg = mapAuthError(err.code);
@@ -709,13 +688,13 @@
             }
         });
 
-        // ===== Đăng nhập Facebook =====
         facebookBtn.addEventListener('click', async () => {
             try {
                 googleBtn.disabled = true;
                 facebookBtn.disabled = true;
                 await signInWithPopup(auth, facebookProvider);
                 showToast('Đăng nhập Facebook thành công', 'success');
+                hasRedirected = true;
                 window.location.href = '/dashboard';
             } catch (err) {
                 const msg = mapAuthError(err.code);
@@ -726,10 +705,16 @@
             }
         });
 
-        // ===== Đã đăng nhập → chuyển thẳng đến Dashboard =====
+        // ===== SỬA LỖI VÒNG LẶP CHUYỂN TAB =====
         onAuthStateChanged(auth, (user) => {
-            if (user && window.location.pathname.endsWith('/login.html') || window.location.pathname === '/login') {
-                window.location.href = '/dashboard';
+            // Chuyển chỉ 1 lần, không lặp; chỉ khi thực sự ở trang login
+            if (user && !hasRedirected) {
+                const path = window.location.pathname;
+                const isLoginPage = path.endsWith('/login.html') || path === '/login' || path === '/login/';
+                if (isLoginPage) {
+                    hasRedirected = true;
+                    window.location.replace('/dashboard');
+                }
             }
         });
     </script>
