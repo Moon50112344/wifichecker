@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #070b14;
+            --text: #e8ecf5;
+            --muted: #6b7794;
+            --border: #1e2a44;
+            --blue: #2f8bff;
+            --blue-hover: #1a7aee;
+        }
+
+        html, body { min-height: 100%; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Ánh sáng nền (giống trang login) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(47,139,255,0.12) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Lưới mờ nền (giống trang login) */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(47,139,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(47,139,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== Thanh điều hướng trên cùng ===== */
+        .site-nav {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .nav-logo svg { width: 22px; height: 22px; flex-shrink: 0; }
+        .nav-logo .studio { color: var(--blue); }
+
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+        .nav-login {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            transition: color 0.2s;
+        }
+        .nav-login:hover { color: var(--text); }
+
+        .nav-register {
+            background: var(--blue);
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 9px 18px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav-register:hover {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(47,139,255,0.25);
+        }
+
+        /* ===== Khu vực giới thiệu trung tâm ===== */
+        .hero {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 72px 0 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 44px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 22px;
+        }
+
+        .hero-logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+        .hero-logo .moon { color: #ffffff; }
+        .hero-logo .studio { color: var(--blue); }
+
+        .hero-tagline {
+            font-size: 17px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .hero-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 28px;
+            letter-spacing: 0.2px;
+        }
+
+        .hero-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-bottom: 40px;
+        }
+
+        /* ===== Liên kết mạng xã hội ===== */
+        .socials {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: #2a3a5c;
+            transform: translateY(-1px);
+        }
+
+        .social-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+        /* ===== Footer ===== */
+        .site-footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+            padding: 24px 0 8px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            body { padding: 18px; }
+            .hero { padding: 48px 0 24px; }
+            .hero-logo { font-size: 32px; gap: 8px; }
+            .hero-logo svg { width: 28px; height: 28px; }
+            .hero-tagline { font-size: 15px; }
+            .nav-register { padding: 8px 14px; font-size: 13px; }
+            .nav-login { padding: 8px 8px; font-size: 13px; }
+            .social-btn { padding: 11px 18px; flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thanh điều hướng: 2 nút góc trên bên phải, cả hai đều tới /login -->
+    <nav class="site-nav">
+        <a href="/" class="nav-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2f8bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Moon</span><span class="studio">Studio</span>
+        </a>
+        <div class="nav-actions">
+            <a href="/login" class="nav-login">Đăng nhập</a>
+            <!-- #register để trang login mở sẵn chế độ đăng ký, không tạo route riêng -->
+            <a href="/login#register" class="nav-register">Đăng ký</a>
+        </div>
+    </nav>
+
+    <!-- Khu vực giới thiệu trung tâm -->
+    <main class="hero">
+        <div class="hero-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2f8bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span class="moon">Moon</span><span class="studio">Studio</span>
+        </div>
+
+        <p class="hero-tagline">Một không gian nhỏ dành cho những dự án, thử nghiệm và sản phẩm công nghệ được tôi thực hiện.</p>
+
+        <p class="hero-date">Website được thành lập vào ngày 01/10/2026.</p>
+
+        <p class="hero-desc">Moon Studio là nơi giới thiệu các dự án cá nhân, thử nghiệm công nghệ và những sản phẩm được xây dựng trong quá trình tìm tòi, học hỏi và sáng tạo.</p>
+
+        <div class="socials">
+            <a href="https://github.com/Moon50112344" target="_blank" rel="noopener" class="social-btn">
+                <!-- Icon GitHub inline SVG -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+                GitHub
+            </a>
+            <a href="https://www.tiktok.com/@moon105_vn" target="_blank" rel="noopener" class="social-btn">
+                <!-- Icon TikTok inline SVG -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                </svg>
+                TikTok
+            </a>
+        </div>
+    </main>
+
+    <footer class="site-footer">© 2026 Moon Studio. All rights reserved.</footer>
+</body>
+</html>
