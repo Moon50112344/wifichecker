@@ -19,6 +19,7 @@
             --blue: #2f8bff;
             --blue-hover: #1a7aee;
             --error: #ff6b6b;
+            --success: #2ecc71;
         }
         
         html, body { height: 100%; }
@@ -75,14 +76,14 @@
         
         .logo {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
         
         .logo-mark {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-size: 38px;
+            font-size: 32px;
             font-weight: 700;
             letter-spacing: -1.5px;
         }
@@ -91,9 +92,8 @@
         .logo-mark .studio { color: var(--blue); }
         
         .logo-mark svg {
-            width: 30px;
-            height: 30px;
-            margin-right: -2px;
+            width: 28px;
+            height: 28px;
         }
         
         .tagline {
@@ -105,7 +105,7 @@
         }
         
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             position: relative;
         }
         
@@ -186,11 +186,14 @@
         }
         .error-text.show { display: block; }
         
+        .confirm-group { display: none; }
+        .confirm-group.show { display: block; }
+        
         .form-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 22px 0;
+            margin: 20px 0;
             font-size: 13px;
         }
         
@@ -284,7 +287,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 28px 0 20px;
+            margin: 24px 0 18px;
             color: var(--muted);
             font-size: 12px;
         }
@@ -322,8 +325,8 @@
         
         .footer {
             text-align: center;
-            margin-top: 36px;
-            font-size: 12px;
+            margin-top: 32px;
+            font-size: 13px;
             color: var(--muted);
         }
         .footer a { color: var(--blue); text-decoration: none; }
@@ -347,7 +350,18 @@
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.error { border-color: var(--error); }
-        .toast.success { border-color: #2ecc71; }
+        .toast.success { border-color: var(--success); }
+        
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-home a {
+            color: var(--muted);
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .back-home a:hover { color: var(--blue); }
     </style>
 </head>
 <body>
@@ -359,21 +373,20 @@
                 </svg>
                 <span class="moon">Moon</span><span class="studio">Studio</span>
             </div>
-            <div class="tagline">Chào mừng trở lại</div>
+            <div class="tagline" id="pageTagline">Chào mừng trở lại</div>
         </div>
         
         <form id="loginForm" novalidate>
             <div class="form-group">
-                <label for="username">Tên đăng nhập</label>
+                <label for="email">Email</label>
                 <div class="input-box">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
                     </svg>
-                    <!-- LƯU Ý: Firebase Auth dùng EMAIL → ô này nhập email -->
-                    <input type="text" id="username" placeholder="Nhập email" autocomplete="username" required>
+                    <input type="email" id="email" placeholder="nhập email của bạn" autocomplete="email" required>
                 </div>
-                <span class="error-text" id="usernameError" aria-live="polite"></span>
+                <span class="error-text" id="emailError" aria-live="polite"></span>
             </div>
             
             <div class="form-group">
@@ -398,7 +411,18 @@
                 <span class="error-text" id="passwordError" aria-live="polite"></span>
             </div>
             
-            <div class="form-row">
+            <div class="form-group confirm-group" id="confirmGroup">
+                <label for="confirmPassword">Xác nhận mật khẩu</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+                </div>
+                <span class="error-text" id="confirmError" aria-live="polite"></span>
+            </div>
+            
+            <div class="form-row" id="loginRow">
                 <label class="checkbox-wrap">
                     <input type="checkbox" id="remember">
                     <span class="checkbox-custom"></span>
@@ -434,24 +458,26 @@
         </div>
         
         <div class="footer">
-            <span id="modeText">Chưa có tài khoản? </span><a href="#" id="toggleMode">Đăng ký ngay</a>
+            <span id="modeText">Chưa có tài khoản? </span><a href="#" id="toggleModeLink">Đăng ký ngay</a>
+        </div>
+        
+        <div class="back-home">
+            <a href="/">Quay lại trang chủ</a>
         </div>
     </div>
     
     <div class="toast" id="toast"></div>
     
-    <!-- Firebase + logic đăng nhập thật (type="module" để import SDK) -->
     <script type="module">
+        // ============================================================
+        // ===== FIREBASE CONFIG — Đảm bảo đúng config của bạn =====
+        // ============================================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
-        import {
-            getAuth, setPersistence, browserLocalPersistence, browserSessionPersistence,
-            signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
-            sendEmailVerification, onAuthStateChanged, GoogleAuthProvider, FacebookAuthProvider,
-            signInWithPopup
-        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getAuth, setPersistence, browserLocalPersistence, browserSessionPersistence,
+                 signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
+                 sendEmailVerification, onAuthStateChanged, GoogleAuthProvider, FacebookAuthProvider,
+                 signInWithPopup } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-        // ===== Firebase config (của bạn) =====
         const firebaseConfig = {
             apiKey: "AIzaSyDlTcZfcnoftOYIGEXPcmr_3g9pYcms3V8",
             authDomain: "wifichecker-ccf9b.firebaseapp.com",
@@ -463,41 +489,35 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
         const facebookProvider = new FacebookAuthProvider();
 
-        // ===== Các phần tử DOM =====
+        // ===== DOM Elements =====
         const form = document.getElementById('loginForm');
-        const btn = document.getElementById('btnLogin');
-        const btnText = btn.querySelector('.btn-text');
-        const togglePass = document.getElementById('togglePass');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnText = btnLogin.querySelector('.btn-text');
+        const emailInput = document.getElementById('email');
         const passInput = document.getElementById('password');
-        const usernameInput = document.getElementById('username');
+        const confirmInput = document.getElementById('confirmPassword');
+        const confirmGroup = document.getElementById('confirmGroup');
         const rememberCheck = document.getElementById('remember');
         const toast = document.getElementById('toast');
-        const usernameError = document.getElementById('usernameError');
-        const passwordError = document.getElementById('passwordError');
+        const emailError = document.getElementById('emailError');
+        const passError = document.getElementById('passwordError');
+        const confirmError = document.getElementById('confirmError');
         const eyeOn = document.getElementById('eyeOn');
         const eyeOff = document.getElementById('eyeOff');
+        const togglePass = document.getElementById('togglePass');
         const forgotLink = document.getElementById('forgotLink');
         const googleBtn = document.getElementById('googleBtn');
         const facebookBtn = document.getElementById('facebookBtn');
         const modeText = document.getElementById('modeText');
-        const toggleModeLink = document.getElementById('toggleMode');
+        const toggleModeLink = document.getElementById('toggleModeLink');
+        const pageTagline = document.getElementById('pageTagline');
+        const loginRow = document.getElementById('loginRow');
 
-        let mode = 'login'; // 'login' | 'register' — chuyển đổi qua link footer
-
-        // ===== Hiện/ẩn mật khẩu =====
-        togglePass.addEventListener('click', () => {
-            const isPass = passInput.type === 'password';
-            passInput.type = isPass ? 'text' : 'password';
-            togglePass.style.color = isPass ? 'var(--blue)' : '';
-            togglePass.setAttribute('aria-label', isPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
-            eyeOn.style.display = isPass ? 'none' : '';
-            eyeOff.style.display = isPass ? '' : 'none';
-        });
+        let mode = 'login'; // 'login' | 'register'
 
         // ===== Toast =====
         let toastTimer;
@@ -510,55 +530,71 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== Validation inline =====
-        function showFieldError(field, msg) {
-            const input = field === 'username' ? usernameInput : passInput;
-            const errEl = field === 'username' ? usernameError : passwordError;
+        // ===== Hiện/ẩn mật khẩu =====
+        togglePass.addEventListener('click', () => {
+            const isPass = passInput.type === 'password';
+            passInput.type = isPass ? 'text' : 'password';
+            togglePass.style.color = isPass ? 'var(--blue)' : '';
+            togglePass.setAttribute('aria-label', isPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+            eyeOn.style.display = isPass ? 'none' : '';
+            eyeOff.style.display = isPass ? '' : 'none';
+        });
+
+        // ===== Validation =====
+        function clearErrors() {
+            [emailInput, passInput, confirmInput].forEach(i => i.classList.remove('field-error'));
+            [emailError, passError, confirmError].forEach(e => { e.textContent = ''; e.classList.remove('show'); });
+        }
+        function showFieldError(fieldId, msg) {
+            const input = document.getElementById(fieldId);
+            const errEl = document.getElementById(fieldId + 'Error');
             input.classList.add('field-error');
             errEl.textContent = msg;
             errEl.classList.add('show');
         }
-        function clearErrors() {
-            [usernameInput, passInput].forEach(i => i.classList.remove('field-error'));
-            [usernameError, passwordError].forEach(e => { e.textContent = ''; e.classList.remove('show'); });
-        }
-        [usernameInput, passInput].forEach(inp => {
-            inp.addEventListener('input', () => {
-                inp.classList.remove('field-error');
-                const errEl = inp === usernameInput ? usernameError : passwordError;
-                errEl.classList.remove('show');
-            });
-        });
-
         function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-        // ===== Ghi nhớ email (an toàn, không lưu mật khẩu) =====
+        // ===== Ghi nhớ email =====
         const savedEmail = localStorage.getItem('saved_email');
         if (savedEmail) {
-            usernameInput.value = savedEmail;
+            emailInput.value = savedEmail;
             rememberCheck.checked = true;
         }
 
+        // ===== Loading state =====
         function setLoading(isLoading) {
-            btn.disabled = isLoading;
-            btn.classList.toggle('loading', isLoading);
+            btnLogin.disabled = isLoading;
+            btnLogin.classList.toggle('loading', isLoading);
             btnText.textContent = isLoading ? 'Đang xử lý...' : (mode === 'register' ? 'Đăng ký tài khoản' : 'Đăng nhập');
         }
 
-        // ===== Chuyển đổi chế độ Đăng nhập / Đăng ký (dùng lại chính form, không thêm layout) =====
+        // ===== Chuyển chế độ Đăng nhập / Đăng ký =====
         function switchMode(newMode) {
             mode = newMode;
+            clearErrors();
+            emailInput.classList.remove('field-error');
+            passInput.classList.remove('field-error');
+            confirmInput.classList.remove('field-error');
+            
             if (mode === 'register') {
+                pageTagline.textContent = 'Tạo tài khoản mới';
                 modeText.textContent = 'Đã có tài khoản? ';
                 toggleModeLink.textContent = 'Đăng nhập ngay';
                 btnText.textContent = 'Đăng ký tài khoản';
+                confirmGroup.classList.add('show');
+                loginRow.style.display = 'none';
+                forgotLink.style.display = 'none';
             } else {
+                pageTagline.textContent = 'Chào mừng trở lại';
                 modeText.textContent = 'Chưa có tài khoản? ';
                 toggleModeLink.textContent = 'Đăng ký ngay';
                 btnText.textContent = 'Đăng nhập';
+                confirmGroup.classList.remove('show');
+                loginRow.style.display = 'flex';
+                forgotLink.style.display = 'inline';
             }
-            clearErrors();
             passInput.value = '';
+            confirmInput.value = '';
         }
         toggleModeLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -574,140 +610,127 @@
                 case 'auth/user-not-found': return 'Không tìm thấy tài khoản với email này';
                 case 'auth/wrong-password': return 'Sai mật khẩu';
                 case 'auth/invalid-credential': return 'Sai email hoặc mật khẩu';
-                case 'auth/too-many-requests': return 'Quá nhiều lần thử. Vui lòng thử lại sau.';
-                case 'auth/network-request-failed': return 'Lỗi mạng. Kiểm tra kết nối.';
-                case 'auth/operation-not-allowed': return 'Nhà cung cấp đăng nhập này chưa được bật trong Firebase Console';
-                case 'auth/weak-password': return 'Mật khẩu quá yếu (tối thiểu 6 ký tự)';
+                case 'auth/too-many-requests': return 'Quá nhiều lần thử. Vui lòng thử lại sau vài giờ hoặc đổi mạng.';
+                case 'auth/network-request-failed': return 'Lỗi mạng. Kiểm tra kết nối internet.';
+                case 'auth/operation-not-allowed': return 'Chưa bật phương thức đăng nhập này trong Firebase Console';
+                case 'auth/weak-password': return 'Mật khẩu quá yếu — tối thiểu 6 ký tự';
                 case 'auth/email-already-in-use': return 'Email này đã được đăng ký';
-                case 'auth/popup-blocked': return 'Trình duyệt chặn popup. Vui lòng cho phép popup.';
-                case 'auth/account-exists-with-different-credential': return 'Tài khoản đã tồn tại với phương thức đăng nhập khác';
+                case 'auth/popup-blocked': return 'Trình duyệt chặn cửa sổ đăng nhập. Vui lòng cho phép popup.';
+                case 'auth/popup-closed-by-user': return ''; // người dùng tự đóng, không báo lỗi
                 default: return 'Đã có lỗi xảy ra. Vui lòng thử lại.';
             }
         }
 
-        // ===== Submit: đăng nhập / đăng ký thật qua Firebase =====
+        // ===== Submit form =====
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearErrors();
 
-            const email = usernameInput.value.trim();
+            const email = emailInput.value.trim();
             const password = passInput.value;
+            const confirmPass = confirmInput.value;
             let valid = true;
 
-            if (!email) { showFieldError('username', 'Vui lòng nhập email'); valid = false; }
-            else if (!isValidEmail(email)) { showFieldError('username', 'Email không hợp lệ (Firebase đăng nhập bằng email)'); valid = false; }
+            if (!email) { showFieldError('email', 'Vui lòng nhập email'); valid = false; }
+            else if (!isValidEmail(email)) { showFieldError('email', 'Email không hợp lệ'); valid = false; }
+            
             if (!password) { showFieldError('password', 'Vui lòng nhập mật khẩu'); valid = false; }
             else if (password.length < 6) { showFieldError('password', 'Mật khẩu tối thiểu 6 ký tự'); valid = false; }
+            
+            if (mode === 'register') {
+                if (!confirmPass) { showFieldError('confirmPassword', 'Vui lòng xác nhận mật khẩu'); valid = false; }
+                else if (password !== confirmPass) { showFieldError('confirmPassword', 'Mật khẩu không khớp'); valid = false; }
+            }
+            
             if (!valid) return;
 
             setLoading(true);
             try {
-                // Ghi nhớ đăng nhập THẬT: LOCAL (kéo dài) hoặc SESSION (tắt tab là hết)
+                // Ghi nhớ đăng nhập
                 const persistence = rememberCheck.checked ? browserLocalPersistence : browserSessionPersistence;
                 await setPersistence(auth, persistence);
 
                 if (mode === 'register') {
                     const userCred = await createUserWithEmailAndPassword(auth, email, password);
-                    await sendEmailVerification(userCred.user); // gửi email xác thực
+                    await sendEmailVerification(userCred.user);
                     if (rememberCheck.checked) localStorage.setItem('saved_email', email);
                     else localStorage.removeItem('saved_email');
-                    showToast('Đăng ký thành công! Email xác thực đã được gửi.', 'success');
+                    showToast('Đăng ký thành công! Email xác minh đã được gửi. Kiểm tra cả thư rác.', 'success');
                     switchMode('login');
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
                     if (rememberCheck.checked) localStorage.setItem('saved_email', email);
                     else localStorage.removeItem('saved_email');
                     showToast('Đăng nhập thành công', 'success');
+                    // Chuyển đến Dashboard
+                    window.location.href = '/dashboard';
                 }
                 passInput.value = '';
-                // TODO: redirect sau khi đăng nhập: window.location.href = '/dashboard';
+                confirmInput.value = '';
             } catch (err) {
                 const msg = mapAuthError(err.code);
-                if (['auth/wrong-password','auth/invalid-credential','auth/user-not-found'].includes(err.code)) {
-                    showFieldError('password', msg);
-                    passInput.value = '';
-                } else if (['auth/invalid-email','auth/missing-email','auth/email-already-in-use'].includes(err.code)) {
-                    showFieldError('username', msg);
-                } else if (err.code === 'auth/weak-password') {
-                    showFieldError('password', msg);
-                }
-                showToast(msg, 'error');
+                if (msg) showToast(msg, 'error');
             } finally {
                 setLoading(false);
             }
         });
 
-        // ===== Quên mật khẩu THẬT: Firebase gửi email reset =====
+        // ===== Quên mật khẩu =====
         forgotLink.addEventListener('click', async (e) => {
             e.preventDefault();
-            const email = usernameInput.value.trim();
+            const email = emailInput.value.trim();
             if (!email || !isValidEmail(email)) {
-                showFieldError('username', 'Nhập email vào ô trên để đặt lại mật khẩu');
-                usernameInput.focus();
+                showFieldError('email', 'Nhập email hợp lệ để đặt lại mật khẩu');
+                emailInput.focus();
                 return;
             }
             try {
                 await sendPasswordResetEmail(auth, email);
-                showToast('Email đặt lại mật khẩu đã được gửi. Kiểm tra hộp thư của bạn.', 'success');
+                showToast('Email đặt lại mật khẩu đã được gửi. Kiểm tra cả thư rác.', 'success');
             } catch (err) {
                 showToast(mapAuthError(err.code), 'error');
             }
         });
 
-        // ===== Đăng nhập Google (OAuth thật do Firebase xử lý) =====
+        // ===== Đăng nhập Google =====
         googleBtn.addEventListener('click', async () => {
             try {
-                googleBtn.disabled = true; facebookBtn.disabled = true;
+                googleBtn.disabled = true;
+                facebookBtn.disabled = true;
                 await signInWithPopup(auth, googleProvider);
                 showToast('Đăng nhập Google thành công', 'success');
+                window.location.href = '/dashboard';
             } catch (err) {
-                if (err.code === 'auth/popup-closed-by-user') { /* người dùng tự đóng, không báo lỗi */ }
-                else if (err.code === 'auth/operation-not-allowed') {
-                    showToast('Chưa bật Google: Firebase Console → Authentication → Sign-in method → Enable Google.', 'error');
-                } else if (err.code === 'auth/popup-blocked') {
-                    showToast('Trình duyệt chặn popup. Vui lòng cho phép popup.', 'error');
-                } else {
-                    showToast(mapAuthError(err.code), 'error');
-                }
+                const msg = mapAuthError(err.code);
+                if (msg) showToast(msg, 'error');
             } finally {
-                googleBtn.disabled = false; facebookBtn.disabled = false;
+                googleBtn.disabled = false;
+                facebookBtn.disabled = false;
             }
         });
 
-        // ===== Đăng nhập Facebook (cần cấu hình App ID/Secret trong Firebase Console) =====
+        // ===== Đăng nhập Facebook =====
         facebookBtn.addEventListener('click', async () => {
             try {
-                googleBtn.disabled = true; facebookBtn.disabled = true;
+                googleBtn.disabled = true;
+                facebookBtn.disabled = true;
                 await signInWithPopup(auth, facebookProvider);
                 showToast('Đăng nhập Facebook thành công', 'success');
+                window.location.href = '/dashboard';
             } catch (err) {
-                if (err.code === 'auth/popup-closed-by-user') { /* bỏ qua */ }
-                else if (err.code === 'auth/operation-not-allowed') {
-                    showToast('Chưa cấu hình Facebook: cần Facebook App ID/Secret → Firebase Console → Authentication → Sign-in method → Facebook.', 'error');
-                } else if (err.code === 'auth/popup-blocked') {
-                    showToast('Trình duyệt chặn popup. Vui lòng cho phép popup.', 'error');
-                } else {
-                    showToast(mapAuthError(err.code), 'error');
-                }
+                const msg = mapAuthError(err.code);
+                if (msg) showToast(msg, 'error');
             } finally {
-                googleBtn.disabled = false; facebookBtn.disabled = false;
+                googleBtn.disabled = false;
+                facebookBtn.disabled = false;
             }
         });
 
-        // ===== Theo dõi trạng thái đăng nhập (chạy ngầm, không đổi UI) =====
+        // ===== Đã đăng nhập → chuyển thẳng đến Dashboard =====
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('Đã đăng nhập:', user.email, user.uid);
-                // Nếu muốn tự động chuyển trang khi đã đăng nhập, bỏ comment dòng dưới:
-                // window.location.href = '/dashboard';
+            if (user && window.location.pathname.endsWith('/login.html') || window.location.pathname === '/login') {
+                window.location.href = '/dashboard';
             }
-        });
-
-        // ===== Enter để submit (giữ nguyên) =====
-        document.querySelectorAll('input').forEach(inp => {
-            inp.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') form.requestSubmit();
-            });
         });
     </script>
 </body>
