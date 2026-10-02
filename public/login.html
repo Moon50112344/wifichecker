@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,404 +8,403 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }    :root {
-        --bg: #070b14;
-        --bg-2: #0d1424;
-        --text: #e8ecf5;
-        --muted: #6b7794;
-        --border: #1e2a44;
-        --blue: #2f8bff;
-        --blue-hover: #1a7aee;
-        --error: #ff6b6b;
-        --success: #2ecc71;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body { height: 100%; }
+        :root {
+            --bg: #070b14;
+            --bg-2: #0d1424;
+            --text: #e8ecf5;
+            --muted: #6b7794;
+            --border: #1e2a44;
+            --blue: #2f8bff;
+            --blue-hover: #1a7aee;
+            --error: #ff6b6b;
+            --success: #2ecc71;
+        }
 
-    body {
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        overflow: hidden;
-        position: relative;
-    }
+        html, body { height: 100%; }
 
-    body::before {
-        content: '';
-        position: fixed;
-        top: -50%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 800px;
-        height: 800px;
-        background: radial-gradient(circle, rgba(47,139,255,0.12) 0%, transparent 70%);
-        pointer-events: none;
-        z-index: 0;
-    }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
 
-    body::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(47,139,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(47,139,255,0.03) 1px, transparent 1px);
-        background-size: 40px 40px;
-        pointer-events: none;
-        z-index: 0;
-    }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(47,139,255,0.12) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    .login-wrap {
-        width: 100%;
-        max-width: 400px;
-        position: relative;
-        z-index: 1;
-        animation: fadeIn 0.6s ease;
-    }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(47,139,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(47,139,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(12px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+        .login-wrap {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.6s ease;
+        }
 
-    .logo {
-        text-align: center;
-        margin-bottom: 40px;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .logo-mark {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 32px;
-        font-weight: 700;
-        letter-spacing: -1.5px;
-    }
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    .logo-mark .moon { color: #ffffff; }
-    .logo-mark .studio { color: var(--blue); }
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+        }
 
-    .logo-mark svg {
-        width: 28px;
-        height: 28px;
-    }
+        .logo-mark .moon { color: #ffffff; }
+        .logo-mark .studio { color: var(--blue); }
 
-    .tagline {
-        text-align: center;
-        font-size: 13px;
-        color: var(--muted);
-        margin-top: 10px;
-        letter-spacing: 0.2px;
-    }
+        .logo-mark svg {
+            width: 28px;
+            height: 28px;
+        }
 
-    .form-group {
-        margin-bottom: 16px;
-        position: relative;
-    }
+        .tagline {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 10px;
+            letter-spacing: 0.2px;
+        }
 
-    .form-group label {
-        display: block;
-        font-size: 12px;
-        color: var(--muted);
-        margin-bottom: 8px;
-        font-weight: 500;
-        letter-spacing: 0.3px;
-    }
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
 
-    .input-box {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
 
-    .input-box svg {
-        position: absolute;
-        left: 14px;
-        width: 18px;
-        height: 18px;
-        color: var(--muted);
-        pointer-events: none;
-        transition: color 0.2s;
-    }
+        .input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
 
-    .input-box input {
-        width: 100%;
-        padding: 14px 14px 14px 44px;
-        background: rgba(255,255,255,0.02);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--text);
-        font-size: 15px;
-        font-family: inherit;
-        transition: all 0.2s;
-    }
+        .input-box svg {
+            position: absolute;
+            left: 14px;
+            width: 18px;
+            height: 18px;
+            color: var(--muted);
+            pointer-events: none;
+            transition: color 0.2s;
+        }
 
-    .input-box input::placeholder { color: #3d4a63; }
+        .input-box input {
+            width: 100%;
+            padding: 14px 14px 14px 44px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
 
-    .input-box input:focus {
-        outline: none;
-        border-color: var(--blue);
-        background: rgba(47,139,255,0.04);
-        box-shadow: 0 0 0 3px rgba(47,139,255,0.1);
-    }
+        .input-box input::placeholder { color: #3d4a63; }
 
-    .input-box input:focus ~ svg { color: var(--blue); }
+        .input-box input:focus {
+            outline: none;
+            border-color: var(--blue);
+            background: rgba(47,139,255,0.04);
+            box-shadow: 0 0 0 3px rgba(47,139,255,0.1);
+        }
 
-    .toggle-pass {
-        position: absolute;
-        right: 12px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 6px;
-        color: var(--muted);
-        display: flex;
-        align-items: center;
-        transition: color 0.2s;
-    }
+        .input-box input:focus ~ svg { color: var(--blue); }
 
-    .toggle-pass:hover { color: var(--text); }
-    .toggle-pass svg { position: static; width: 18px; height: 18px; }
+        .toggle-pass {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
 
-    .input-box input.field-error { border-color: var(--error); }
+        .toggle-pass:hover { color: var(--text); }
+        .toggle-pass svg { position: static; width: 18px; height: 18px; }
 
-    .input-box input.field-error:focus {
-        border-color: var(--error);
-        box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
-    }
+        .input-box input.field-error { border-color: var(--error); }
 
-    .error-text {
-        display: none;
-        font-size: 12px;
-        color: var(--error);
-        margin-top: 6px;
-    }
+        .input-box input.field-error:focus {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+        }
 
-    .error-text.show { display: block; }
+        .error-text {
+            display: none;
+            font-size: 12px;
+            color: var(--error);
+            margin-top: 6px;
+        }
 
-    .confirm-group { display: none; }
-    .confirm-group.show { display: block; }
+        .error-text.show { display: block; }
 
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 0;
-        font-size: 13px;
-    }
+        .confirm-group { display: none; }
+        .confirm-group.show { display: block; }
 
-    .checkbox-wrap {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        color: var(--muted);
-        user-select: none;
-    }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 13px;
+        }
 
-    .checkbox-wrap input { display: none; }
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            user-select: none;
+        }
 
-    .checkbox-custom {
-        width: 16px;
-        height: 16px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        position: relative;
-        transition: all 0.2s;
-        flex-shrink: 0;
-    }
+        .checkbox-wrap input { display: none; }
 
-    .checkbox-wrap input:checked + .checkbox-custom {
-        background: var(--blue);
-        border-color: var(--blue);
-    }
+        .checkbox-custom {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
 
-    .checkbox-wrap input:checked + .checkbox-custom::after {
-        content: '';
-        position: absolute;
-        left: 5px;
-        top: 1px;
-        width: 4px;
-        height: 9px;
-        border: solid #fff;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-    }
+        .checkbox-wrap input:checked + .checkbox-custom {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
 
-    .forgot {
-        color: var(--blue);
-        text-decoration: none;
-        transition: opacity 0.2s;
-    }
+        .checkbox-wrap input:checked + .checkbox-custom::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 4px;
+            height: 9px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
 
-    .forgot:hover { opacity: 0.8; }
+        .forgot {
+            color: var(--blue);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
 
-    .btn-login {
-        width: 100%;
-        padding: 15px;
-        background: var(--blue);
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 600;
-        font-family: inherit;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
+        .forgot:hover { opacity: 0.8; }
 
-    .btn-login:hover:not(:disabled) {
-        background: var(--blue-hover);
-        transform: translateY(-1px);
-        box-shadow: 0 8px 20px rgba(47,139,255,0.25);
-    }
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-    .btn-login:active:not(:disabled) {
-        transform: translateY(0);
-    }
+        .btn-login:hover:not(:disabled) {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(47,139,255,0.25);
+        }
 
-    .btn-login:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-    }
+        .btn-login:active:not(:disabled) { transform: translateY(0); }
 
-    .spinner {
-        width: 16px;
-        height: 16px;
-        border: 2px solid rgba(255,255,255,0.3);
-        border-top-color: #fff;
-        border-radius: 50%;
-        animation: spin 0.6s linear infinite;
-        display: none;
-    }
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
 
-    .btn-login.loading .spinner { display: block; }
-    .btn-login.loading .btn-text { opacity: 0.7; }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
-    .divider {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 24px 0 18px;
-        color: var(--muted);
-        font-size: 12px;
-    }
+        .btn-login.loading .spinner { display: block; }
+        .btn-login.loading .btn-text { opacity: 0.7; }
 
-    .divider::before,
-    .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-    }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0 18px;
+            color: var(--muted);
+            font-size: 12px;
+        }
 
-    .socials {
-        display: flex;
-        gap: 10px;
-    }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
-    .social-btn {
-        flex: 1;
-        padding: 12px;
-        background: rgba(255,255,255,0.02);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        color: var(--text);
-        font-size: 13px;
-        font-family: inherit;
-        transition: all 0.2s;
-    }
+        .socials {
+            display: flex;
+            gap: 10px;
+        }
 
-    .social-btn:hover {
-        background: rgba(255,255,255,0.05);
-        border-color: #2a3a5c;
-    }
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text);
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
 
-    .social-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
+        .social-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: #2a3a5c;
+        }
 
-    .social-btn svg {
-        width: 16px;
-        height: 16px;
-    }
+        .social-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    .footer {
-        text-align: center;
-        margin-top: 32px;
-        font-size: 13px;
-        color: var(--muted);
-    }
+        .social-btn svg {
+            width: 16px;
+            height: 16px;
+        }
 
-    .footer a {
-        color: var(--blue);
-        text-decoration: none;
-    }
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 13px;
+            color: var(--muted);
+        }
 
-    .footer a:hover {
-        text-decoration: underline;
-    }
+        .footer a {
+            color: var(--blue);
+            text-decoration: none;
+        }
 
-    .toast {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: #16203a;
-        border: 1px solid var(--border);
-        color: var(--text);
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-size: 14px;
-        z-index: 100;
-        transition: transform 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        max-width: 90vw;
-    }
+        .footer a:hover { text-decoration: underline; }
 
-    .toast.show {
-        transform: translateX(-50%) translateY(0);
-    }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #16203a;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 90vw;
+        }
 
-    .toast.error { border-color: var(--error); }
-    .toast.success { border-color: var(--success); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
 
-    .back-home {
-        text-align: center;
-        margin-top: 20px;
-    }
+        .toast.error { border-color: var(--error); }
+        .toast.success { border-color: var(--success); }
 
-    .back-home a {
-        color: var(--muted);
-        font-size: 13px;
-        text-decoration: none;
-    }
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-    .back-home a:hover {
-        color: var(--blue);
-    }
-</style>
+        .back-home a {
+            color: var(--muted);
+            font-size: 13px;
+            text-decoration: none;
+        }
 
-</head><body>
+        .back-home a:hover {
+            color: var(--blue);
+        }
+    </style>
+</head>
+
+<body>
     <div class="login-wrap">
         <div class="logo">
             <div class="logo-mark">
@@ -414,545 +414,495 @@
                 <span class="moon">Moon</span><span class="studio">Studio</span>
             </div>
             <div class="tagline" id="pageTagline">Chào mừng trở lại</div>
-        </div>    <form id="loginForm" novalidate>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <div class="input-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                <input type="email" id="email" placeholder="nhập email của bạn" autocomplete="email" required>
-            </div>
-            <span class="error-text" id="emailError" aria-live="polite"></span>
         </div>
 
-        <div class="form-group">
-            <label for="password">Mật khẩu</label>
-            <div class="input-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <input type="email" id="email" placeholder="nhập email của bạn" autocomplete="email" required>
+                </div>
+                <span class="error-text" id="emailError" aria-live="polite"></span>
+            </div>
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Nhập mật khẩu"
-                    autocomplete="current-password"
-                    required
-                >
-
-                <button type="button" class="toggle-pass" id="togglePass" aria-label="Hiện mật khẩu">
-                    <svg id="eyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                     </svg>
 
-                    <svg id="eyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                        <line x1="1" y1="1" x2="23" y2="23"/>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Nhập mật khẩu"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button type="button" class="toggle-pass" id="togglePass" aria-label="Hiện mật khẩu">
+                        <svg id="eyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+
+                        <svg id="eyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <span class="error-text" id="passwordError" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group confirm-group" id="confirmGroup">
+                <label for="confirmPassword">Xác nhận mật khẩu</label>
+
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
-                </button>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Nhập lại mật khẩu"
+                        autocomplete="new-password"
+                    >
+                </div>
+
+                <span class="error-text" id="confirmError" aria-live="polite"></span>
             </div>
 
-            <span class="error-text" id="passwordError" aria-live="polite"></span>
-        </div>
+            <div class="form-row" id="loginRow">
+                <label class="checkbox-wrap">
+                    <input type="checkbox" id="remember">
+                    <span class="checkbox-custom"></span>
+                    <span>Ghi nhớ đăng nhập</span>
+                </label>
 
-        <div class="form-group confirm-group" id="confirmGroup">
-            <label for="confirmPassword">Xác nhận mật khẩu</label>
+                <a href="#" class="forgot" id="forgotLink">Quên mật khẩu?</a>
+            </div>
 
-            <div class="input-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <button type="submit" class="btn-login" id="btnLogin">
+                <span class="spinner"></span>
+                <span class="btn-text">Đăng nhập</span>
+            </button>
+        </form>
+
+        <div class="divider">hoặc tiếp tục với</div>
+
+        <div class="socials">
+            <button type="button" class="social-btn" id="googleBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
+                Google
+            </button>
 
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Nhập lại mật khẩu"
-                    autocomplete="new-password"
-                >
-            </div>
-
-            <span class="error-text" id="confirmError" aria-live="polite"></span>
+            <button type="button" class="social-btn" id="facebookBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/>
+                </svg>
+                Facebook
+            </button>
         </div>
 
-        <div class="form-row" id="loginRow">
-            <label class="checkbox-wrap">
-                <input type="checkbox" id="remember">
-                <span class="checkbox-custom"></span>
-                <span>Ghi nhớ đăng nhập</span>
-            </label>
-
-            <a href="#" class="forgot" id="forgotLink">Quên mật khẩu?</a>
+        <div class="footer">
+            <span id="modeText">Chưa có tài khoản? </span>
+            <a href="#" id="toggleModeLink">Đăng ký ngay</a>
         </div>
 
-        <button type="submit" class="btn-login" id="btnLogin">
-            <span class="spinner"></span>
-            <span class="btn-text">Đăng nhập</span>
-        </button>
-    </form>
-
-    <div class="divider">hoặc tiếp tục với</div>
-
-    <div class="socials">
-        <button type="button" class="social-btn" id="googleBtn">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Google
-        </button>
-
-        <button type="button" class="social-btn" id="facebookBtn">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/>
-            </svg>
-            Facebook
-        </button>
+        <div class="back-home">
+            <a href="/">Quay lại trang chủ</a>
+        </div>
     </div>
 
-    <div class="footer">
-        <span id="modeText">Chưa có tài khoản? </span>
-        <a href="#" id="toggleModeLink">Đăng ký ngay</a>
-    </div>
+    <div class="toast" id="toast"></div>
 
-    <div class="back-home">
-        <a href="/">Quay lại trang chủ</a>
-    </div>
-</div>
+    <script type="module">
+        // ============================================================
+        // FIREBASE
+        // ============================================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-<div class="toast" id="toast"></div>
+        import {
+            getAuth,
+            setPersistence,
+            browserLocalPersistence,
+            browserSessionPersistence,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            sendPasswordResetEmail,
+            sendEmailVerification,
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            FacebookAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-<script type="module">
-    import {
-        initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlTcZfcnoftOYIGEXPcmr_3g9pYcms3V8",
+            authDomain: "wifichecker-ccf9b.firebaseapp.com",
+            projectId: "wifichecker-ccf9b",
+            storageBucket: "wifichecker-ccf9b.firebasestorage.app",
+            messagingSenderId: "58738730558",
+            appId: "1:58738730558:web:b0c0e18daac85aa3d9136f",
+            measurementId: "G-5MLQGREBJE"
+        };
 
-    import {
-        getAuth,
-        setPersistence,
-        browserLocalPersistence,
-        browserSessionPersistence,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
-        sendPasswordResetEmail,
-        sendEmailVerification,
-        onAuthStateChanged,
-        GoogleAuthProvider,
-        FacebookAuthProvider,
-        signInWithPopup
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
+        const googleProvider = new GoogleAuthProvider();
+        const facebookProvider = new FacebookAuthProvider();
 
-    // ============================================================
-    // FIREBASE CONFIG
-    // ============================================================
+        // ===== DOM =====
+        const form = document.getElementById('loginForm');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnText = btnLogin.querySelector('.btn-text');
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDlTcZfcnoftOYIGEXPcmr_3g9pYcms3V8",
-        authDomain: "wifichecker-ccf9b.firebaseapp.com",
-        projectId: "wifichecker-ccf9b",
-        storageBucket: "wifichecker-ccf9b.firebasestorage.app",
-        messagingSenderId: "58738730558",
-        appId: "1:58738730558:web:b0c0e18daac85aa3d9136f",
-        measurementId: "G-5MLQGREBJE"
-    };
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirmPassword');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+        const confirmGroup = document.getElementById('confirmGroup');
+        const rememberCheck = document.getElementById('remember');
 
-    const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
+        const toast = document.getElementById('toast');
 
+        const emailError = document.getElementById('emailError');
+        const passError = document.getElementById('passwordError');
+        const confirmError = document.getElementById('confirmError');
 
-    // ============================================================
-    // DOM
-    // ============================================================
+        const eyeOn = document.getElementById('eyeOn');
+        const eyeOff = document.getElementById('eyeOff');
+        const togglePass = document.getElementById('togglePass');
 
-    const form = document.getElementById('loginForm');
-    const btnLogin = document.getElementById('btnLogin');
-    const btnText = btnLogin.querySelector('.btn-text');
+        const forgotLink = document.getElementById('forgotLink');
 
-    const emailInput = document.getElementById('email');
-    const passInput = document.getElementById('password');
-    const confirmInput = document.getElementById('confirmPassword');
+        const googleBtn = document.getElementById('googleBtn');
+        const facebookBtn = document.getElementById('facebookBtn');
 
-    const confirmGroup = document.getElementById('confirmGroup');
-    const rememberCheck = document.getElementById('remember');
+        const modeText = document.getElementById('modeText');
+        const toggleModeLink = document.getElementById('toggleModeLink');
 
-    const toast = document.getElementById('toast');
+        const pageTagline = document.getElementById('pageTagline');
+        const loginRow = document.getElementById('loginRow');
 
-    const emailError = document.getElementById('emailError');
-    const passError = document.getElementById('passwordError');
-    const confirmError = document.getElementById('confirmError');
+        let mode = 'login';
+        let authReady = false;
+        let redirecting = false;
 
-    const eyeOn = document.getElementById('eyeOn');
-    const eyeOff = document.getElementById('eyeOff');
-    const togglePass = document.getElementById('togglePass');
+        // ===== Toast =====
+        let toastTimer;
 
-    const forgotLink = document.getElementById('forgotLink');
+        function showToast(msg, type) {
+            toast.textContent = msg;
+            toast.classList.remove('error', 'success');
 
-    const googleBtn = document.getElementById('googleBtn');
-    const facebookBtn = document.getElementById('facebookBtn');
+            if (type) {
+                toast.classList.add(type);
+            }
 
-    const modeText = document.getElementById('modeText');
-    const toggleModeLink = document.getElementById('toggleModeLink');
+            toast.classList.add('show');
 
-    const pageTagline = document.getElementById('pageTagline');
-    const loginRow = document.getElementById('loginRow');
+            clearTimeout(toastTimer);
 
-
-    // ============================================================
-    // REDIRECT LOCK
-    // ============================================================
-
-    let redirecting = false;
-
-
-    // ============================================================
-    // TOAST
-    // ============================================================
-
-    let toastTimer;
-
-    function showToast(msg, type) {
-        toast.textContent = msg;
-
-        toast.classList.remove('error', 'success');
-
-        if (type) {
-            toast.classList.add(type);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
         }
 
-        toast.classList.add('show');
+        // ===== Hiện / ẩn mật khẩu =====
+        togglePass.addEventListener('click', () => {
+            const isPass = passInput.type === 'password';
 
-        clearTimeout(toastTimer);
+            passInput.type = isPass ? 'text' : 'password';
 
-        toastTimer = setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3500);
-    }
+            togglePass.style.color = isPass ? 'var(--blue)' : '';
 
+            togglePass.setAttribute(
+                'aria-label',
+                isPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'
+            );
 
-    // ============================================================
-    // PASSWORD VISIBILITY
-    // ============================================================
-
-    togglePass.addEventListener('click', () => {
-        const isPass = passInput.type === 'password';
-
-        passInput.type = isPass ? 'text' : 'password';
-
-        togglePass.style.color = isPass ? 'var(--blue)' : '';
-
-        togglePass.setAttribute(
-            'aria-label',
-            isPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'
-        );
-
-        eyeOn.style.display = isPass ? 'none' : '';
-        eyeOff.style.display = isPass ? '' : 'none';
-    });
-
-
-    // ============================================================
-    // VALIDATION
-    // ============================================================
-
-    function clearErrors() {
-        [emailInput, passInput, confirmInput].forEach(input => {
-            input.classList.remove('field-error');
+            eyeOn.style.display = isPass ? 'none' : '';
+            eyeOff.style.display = isPass ? '' : 'none';
         });
 
-        [emailError, passError, confirmError].forEach(error => {
-            error.textContent = '';
-            error.classList.remove('show');
+        // ===== Validation =====
+        function clearErrors() {
+            [emailInput, passInput, confirmInput].forEach(input => {
+                input.classList.remove('field-error');
+            });
+
+            [emailError, passError, confirmError].forEach(error => {
+                error.textContent = '';
+                error.classList.remove('show');
+            });
+        }
+
+        function showFieldError(fieldId, msg) {
+            const input = document.getElementById(fieldId);
+            const error = document.getElementById(fieldId + 'Error');
+
+            input.classList.add('field-error');
+            error.textContent = msg;
+            error.classList.add('show');
+        }
+
+        function isValidEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        // ===== Ghi nhớ email =====
+        const savedEmail = localStorage.getItem('saved_email');
+
+        if (savedEmail) {
+            emailInput.value = savedEmail;
+            rememberCheck.checked = true;
+        }
+
+        // ===== Loading =====
+        function setLoading(isLoading) {
+            btnLogin.disabled = isLoading;
+            btnLogin.classList.toggle('loading', isLoading);
+
+            btnText.textContent = isLoading
+                ? 'Đang xử lý...'
+                : (mode === 'register'
+                    ? 'Đăng ký tài khoản'
+                    : 'Đăng nhập');
+        }
+
+        // ===== Chuyển Login / Register =====
+        function switchMode(newMode) {
+            mode = newMode;
+
+            clearErrors();
+
+            if (mode === 'register') {
+                pageTagline.textContent = 'Tạo tài khoản mới';
+
+                modeText.textContent = 'Đã có tài khoản? ';
+                toggleModeLink.textContent = 'Đăng nhập ngay';
+
+                btnText.textContent = 'Đăng ký tài khoản';
+
+                confirmGroup.classList.add('show');
+
+                loginRow.style.display = 'none';
+                forgotLink.style.display = 'none';
+
+                passInput.setAttribute('autocomplete', 'new-password');
+            } else {
+                pageTagline.textContent = 'Chào mừng trở lại';
+
+                modeText.textContent = 'Chưa có tài khoản? ';
+                toggleModeLink.textContent = 'Đăng ký ngay';
+
+                btnText.textContent = 'Đăng nhập';
+
+                confirmGroup.classList.remove('show');
+
+                loginRow.style.display = 'flex';
+                forgotLink.style.display = 'inline';
+
+                passInput.setAttribute('autocomplete', 'current-password');
+            }
+
+            passInput.value = '';
+            confirmInput.value = '';
+        }
+
+        toggleModeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (redirecting) return;
+
+            switchMode(
+                mode === 'login'
+                    ? 'register'
+                    : 'login'
+            );
         });
-    }
 
+        // ===== Firebase error =====
+        function mapAuthError(code) {
+            switch (code) {
+                case 'auth/invalid-email':
+                    return 'Email không hợp lệ';
 
-    function showFieldError(fieldId, msg) {
-        const input = document.getElementById(fieldId);
-        const errorElement = document.getElementById(fieldId + 'Error');
+                case 'auth/missing-email':
+                    return 'Vui lòng nhập email';
 
-        input.classList.add('field-error');
+                case 'auth/user-disabled':
+                    return 'Tài khoản đã bị khóa';
 
-        errorElement.textContent = msg;
-        errorElement.classList.add('show');
-    }
+                case 'auth/user-not-found':
+                    return 'Không tìm thấy tài khoản với email này';
 
+                case 'auth/wrong-password':
+                    return 'Sai mật khẩu';
 
-    function isValidEmail(value) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    }
+                case 'auth/invalid-credential':
+                    return 'Sai email hoặc mật khẩu';
 
+                case 'auth/too-many-requests':
+                    return 'Quá nhiều lần thử. Vui lòng thử lại sau vài giờ hoặc đổi mạng.';
 
-    // ============================================================
-    // SAVED EMAIL
-    // ============================================================
+                case 'auth/network-request-failed':
+                    return 'Lỗi mạng. Kiểm tra kết nối internet.';
 
-    const savedEmail = localStorage.getItem('saved_email');
+                case 'auth/operation-not-allowed':
+                    return 'Chưa bật phương thức đăng nhập này trong Firebase Console';
 
-    if (savedEmail) {
-        emailInput.value = savedEmail;
-        rememberCheck.checked = true;
-    }
+                case 'auth/weak-password':
+                    return 'Mật khẩu quá yếu — tối thiểu 6 ký tự';
 
+                case 'auth/email-already-in-use':
+                    return 'Email này đã được đăng ký';
 
-    // ============================================================
-    // LOADING
-    // ============================================================
+                case 'auth/popup-blocked':
+                    return 'Trình duyệt chặn cửa sổ đăng nhập. Vui lòng cho phép popup.';
 
-    function setLoading(isLoading) {
-        btnLogin.disabled = isLoading;
+                case 'auth/popup-closed-by-user':
+                    return '';
 
-        btnLogin.classList.toggle('loading', isLoading);
-
-        btnText.textContent = isLoading
-            ? 'Đang xử lý...'
-            : (mode === 'register'
-                ? 'Đăng ký tài khoản'
-                : 'Đăng nhập');
-    }
-
-
-    // ============================================================
-    // LOGIN / REGISTER MODE
-    // ============================================================
-
-    let mode = 'login';
-
-
-    function switchMode(newMode) {
-        mode = newMode;
-
-        clearErrors();
-
-        if (mode === 'register') {
-
-            pageTagline.textContent = 'Tạo tài khoản mới';
-
-            modeText.textContent = 'Đã có tài khoản? ';
-
-            toggleModeLink.textContent = 'Đăng nhập ngay';
-
-            btnText.textContent = 'Đăng ký tài khoản';
-
-            confirmGroup.classList.add('show');
-
-            loginRow.style.display = 'none';
-
-            forgotLink.style.display = 'none';
-
-        } else {
-
-            pageTagline.textContent = 'Chào mừng trở lại';
-
-            modeText.textContent = 'Chưa có tài khoản? ';
-
-            toggleModeLink.textContent = 'Đăng ký ngay';
-
-            btnText.textContent = 'Đăng nhập';
-
-            confirmGroup.classList.remove('show');
-
-            loginRow.style.display = 'flex';
-
-            forgotLink.style.display = 'inline';
-        }
-
-        passInput.value = '';
-        confirmInput.value = '';
-    }
-
-
-    toggleModeLink.addEventListener('click', event => {
-        event.preventDefault();
-
-        if (redirecting) return;
-
-        switchMode(
-            mode === 'login'
-                ? 'register'
-                : 'login'
-        );
-    });
-
-
-    // ============================================================
-    // FIREBASE ERROR MAPPING
-    // ============================================================
-
-    function mapAuthError(code) {
-
-        switch (code) {
-
-            case 'auth/invalid-email':
-                return 'Email không hợp lệ';
-
-            case 'auth/missing-email':
-                return 'Vui lòng nhập email';
-
-            case 'auth/user-disabled':
-                return 'Tài khoản đã bị khóa';
-
-            case 'auth/user-not-found':
-                return 'Không tìm thấy tài khoản với email này';
-
-            case 'auth/wrong-password':
-                return 'Sai mật khẩu';
-
-            case 'auth/invalid-credential':
-                return 'Sai email hoặc mật khẩu';
-
-            case 'auth/too-many-requests':
-                return 'Quá nhiều lần thử. Vui lòng thử lại sau vài giờ hoặc đổi mạng.';
-
-            case 'auth/network-request-failed':
-                return 'Lỗi mạng. Kiểm tra kết nối internet.';
-
-            case 'auth/operation-not-allowed':
-                return 'Chưa bật phương thức đăng nhập này trong Firebase Console';
-
-            case 'auth/weak-password':
-                return 'Mật khẩu quá yếu — tối thiểu 6 ký tự';
-
-            case 'auth/email-already-in-use':
-                return 'Email này đã được đăng ký';
-
-            case 'auth/popup-blocked':
-                return 'Trình duyệt chặn cửa sổ đăng nhập. Vui lòng cho phép popup.';
-
-            case 'auth/popup-closed-by-user':
-                return '';
-
-            default:
-                return 'Đã có lỗi xảy ra. Vui lòng thử lại.';
-        }
-    }
-
-
-    // ============================================================
-    // EMAIL LOGIN / REGISTER
-    // ============================================================
-
-    form.addEventListener('submit', async event => {
-
-        event.preventDefault();
-
-        if (redirecting) return;
-
-        clearErrors();
-
-        const email = emailInput.value.trim();
-        const password = passInput.value;
-        const confirmPass = confirmInput.value;
-
-        let valid = true;
-
-
-        if (!email) {
-
-            showFieldError(
-                'email',
-                'Vui lòng nhập email'
-            );
-
-            valid = false;
-
-        } else if (!isValidEmail(email)) {
-
-            showFieldError(
-                'email',
-                'Email không hợp lệ'
-            );
-
-            valid = false;
-        }
-
-
-        if (!password) {
-
-            showFieldError(
-                'password',
-                'Vui lòng nhập mật khẩu'
-            );
-
-            valid = false;
-
-        } else if (password.length < 6) {
-
-            showFieldError(
-                'password',
-                'Mật khẩu tối thiểu 6 ký tự'
-            );
-
-            valid = false;
-        }
-
-
-        if (mode === 'register') {
-
-            if (!confirmPass) {
-
-                showFieldError(
-                    'confirmPassword',
-                    'Vui lòng xác nhận mật khẩu'
-                );
-
-                valid = false;
-
-            } else if (password !== confirmPass) {
-
-                showFieldError(
-                    'confirmPassword',
-                    'Mật khẩu không khớp'
-                );
-
-                valid = false;
+                default:
+                    return 'Đã có lỗi xảy ra. Vui lòng thử lại.';
             }
         }
 
+        // ============================================================
+        // SUBMIT
+        // ============================================================
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        if (!valid) return;
+            if (redirecting) return;
 
+            clearErrors();
 
-        setLoading(true);
+            const email = emailInput.value.trim();
+            const password = passInput.value;
+            const confirmPass = confirmInput.value;
 
-        try {
+            let valid = true;
 
-            const persistence =
-                rememberCheck.checked
+            if (!email) {
+                showFieldError('email', 'Vui lòng nhập email');
+                valid = false;
+            } else if (!isValidEmail(email)) {
+                showFieldError('email', 'Email không hợp lệ');
+                valid = false;
+            }
+
+            if (!password) {
+                showFieldError('password', 'Vui lòng nhập mật khẩu');
+                valid = false;
+            } else if (password.length < 6) {
+                showFieldError('password', 'Mật khẩu tối thiểu 6 ký tự');
+                valid = false;
+            }
+
+            if (mode === 'register') {
+                if (!confirmPass) {
+                    showFieldError(
+                        'confirmPassword',
+                        'Vui lòng xác nhận mật khẩu'
+                    );
+
+                    valid = false;
+                } else if (password !== confirmPass) {
+                    showFieldError(
+                        'confirmPassword',
+                        'Mật khẩu không khớp'
+                    );
+
+                    valid = false;
+                }
+            }
+
+            if (!valid) return;
+
+            setLoading(true);
+
+            try {
+                const persistence = rememberCheck.checked
                     ? browserLocalPersistence
                     : browserSessionPersistence;
 
-            await setPersistence(
-                auth,
-                persistence
-            );
+                await setPersistence(auth, persistence);
 
+                // ===== ĐĂNG KÝ =====
+                if (mode === 'register') {
+                    const userCred =
+                        await createUserWithEmailAndPassword(
+                            auth,
+                            email,
+                            password
+                        );
 
-            // =========================
-            // REGISTER
-            // =========================
+                    await sendEmailVerification(userCred.user);
 
-            if (mode === 'register') {
+                    if (rememberCheck.checked) {
+                        localStorage.setItem(
+                            'saved_email',
+                            email
+                        );
+                    } else {
+                        localStorage.removeItem(
+                            'saved_email'
+                        );
+                    }
 
-                const userCred =
-                    await createUserWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
+                    /*
+                     * Firebase tự đăng nhập user sau khi đăng ký.
+                     * Không signOut ở đây để tránh làm mất session.
+                     *
+                     * Tuy nhiên onAuthStateChanged bên dưới sẽ
+                     * không redirect khi đang ở flow đăng ký.
+                     */
+
+                    showToast(
+                        'Đăng ký thành công! Email xác minh đã được gửi. Kiểm tra cả thư rác.',
+                        'success'
                     );
 
-                await sendEmailVerification(
-                    userCred.user
-                );
+                    /*
+                     * Đăng xuất sau khi gửi email xác minh để
+                     * người dùng phải đăng nhập lại.
+                     *
+                     * Việc này được thực hiện ở đây, không phải
+                     * trong onAuthStateChanged.
+                     */
+                    await auth.signOut();
 
+                    switchMode('login');
+
+                    passInput.value = '';
+                    confirmInput.value = '';
+
+                    return;
+                }
+
+                // ===== ĐĂNG NHẬP =====
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
 
                 if (rememberCheck.checked) {
                     localStorage.setItem(
@@ -965,273 +915,200 @@
                     );
                 }
 
+                /*
+                 * Firebase đã hoàn tất sign-in.
+                 * Chuyển chính tab hiện tại sang dashboard.
+                 */
+                redirecting = true;
 
-                showToast(
-                    'Đăng ký thành công! Email xác minh đã được gửi. Kiểm tra cả thư rác.',
-                    'success'
+                window.location.href = '/dashboard';
+
+            } catch (err) {
+                const msg = mapAuthError(err.code);
+
+                if (msg) {
+                    showToast(msg, 'error');
+                }
+            } finally {
+                /*
+                 * Nếu đang chuyển trang thì không cần
+                 * thay đổi UI nữa.
+                 */
+                if (!redirecting) {
+                    setLoading(false);
+                }
+            }
+        });
+
+        // ============================================================
+        // QUÊN MẬT KHẨU
+        // ============================================================
+        forgotLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            if (redirecting) return;
+
+            const email = emailInput.value.trim();
+
+            if (!email || !isValidEmail(email)) {
+                showFieldError(
+                    'email',
+                    'Nhập email hợp lệ để đặt lại mật khẩu'
                 );
 
-
-                /*
-                 * Đăng ký xong Firebase đã đăng nhập user.
-                 * Đăng xuất ngay để onAuthStateChanged không
-                 * tự chuyển sang dashboard.
-                 */
-
-                await auth.signOut();
-
-                switchMode('login');
-
-
-                passInput.value = '';
-                confirmInput.value = '';
-
+                emailInput.focus();
                 return;
             }
 
-
-            // =========================
-            // LOGIN
-            // =========================
-
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-
-            if (rememberCheck.checked) {
-
-                localStorage.setItem(
-                    'saved_email',
+            try {
+                await sendPasswordResetEmail(
+                    auth,
                     email
                 );
 
-            } else {
-
-                localStorage.removeItem(
-                    'saved_email'
+                showToast(
+                    'Email đặt lại mật khẩu đã được gửi. Kiểm tra cả thư rác.',
+                    'success'
                 );
+
+            } catch (err) {
+                const msg = mapAuthError(err.code);
+
+                if (msg) {
+                    showToast(msg, 'error');
+                }
             }
+        });
 
+        // ============================================================
+        // GOOGLE
+        // ============================================================
+        googleBtn.addEventListener('click', async () => {
+            if (redirecting) return;
 
+            try {
+                googleBtn.disabled = true;
+                facebookBtn.disabled = true;
+
+                /*
+                 * Đảm bảo persistence được thiết lập trước
+                 * khi Google đăng nhập.
+                 */
+                const persistence = rememberCheck.checked
+                    ? browserLocalPersistence
+                    : browserSessionPersistence;
+
+                await setPersistence(auth, persistence);
+
+                await signInWithPopup(
+                    auth,
+                    googleProvider
+                );
+
+                showToast(
+                    'Đăng nhập Google thành công',
+                    'success'
+                );
+
+                redirecting = true;
+
+                window.location.href = '/dashboard';
+
+            } catch (err) {
+                const msg = mapAuthError(err.code);
+
+                if (msg) {
+                    showToast(msg, 'error');
+                }
+            } finally {
+                if (!redirecting) {
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                }
+            }
+        });
+
+        // ============================================================
+        // FACEBOOK
+        // ============================================================
+        facebookBtn.addEventListener('click', async () => {
+            if (redirecting) return;
+
+            try {
+                googleBtn.disabled = true;
+                facebookBtn.disabled = true;
+
+                const persistence = rememberCheck.checked
+                    ? browserLocalPersistence
+                    : browserSessionPersistence;
+
+                await setPersistence(auth, persistence);
+
+                await signInWithPopup(
+                    auth,
+                    facebookProvider
+                );
+
+                showToast(
+                    'Đăng nhập Facebook thành công',
+                    'success'
+                );
+
+                redirecting = true;
+
+                window.location.href = '/dashboard';
+
+            } catch (err) {
+                const msg = mapAuthError(err.code);
+
+                if (msg) {
+                    showToast(msg, 'error');
+                }
+            } finally {
+                if (!redirecting) {
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                }
+            }
+        });
+
+        // ============================================================
+        // AUTH STATE
+        // ============================================================
+        onAuthStateChanged(auth, (user) => {
             /*
-             * Đặt lock trước khi redirect.
-             * onAuthStateChanged sẽ không redirect lần 2.
+             * Firebase có thể mất một khoảng ngắn để khôi phục
+             * persistence khi trang vừa tải.
+             *
+             * Vì vậy chỉ redirect nếu:
+             * 1. Firebase đã trả về user
+             * 2. User thực sự đang ở login page
              */
+            authReady = true;
 
-            redirecting = true;
+            if (redirecting) return;
 
-            showToast(
-                'Đăng nhập thành công',
-                'success'
-            );
+            const path = window.location.pathname;
 
-            window.location.replace('/dashboard');
+            const isLoginPage =
+                path === '/login' ||
+                path === '/login/' ||
+                path.endsWith('/login.html');
 
-        } catch (err) {
+            if (user && isLoginPage) {
+                redirecting = true;
 
-            console.error('Firebase Auth Error:', err);
-
-            const msg = mapAuthError(err.code);
-
-            if (msg) {
-                showToast(msg, 'error');
+                /*
+                 * Không mở tab mới.
+                 * Chỉ chuyển trang hiện tại.
+                 */
+                window.location.href = '/dashboard';
             }
-
-        } finally {
-
-            if (!redirecting) {
-                setLoading(false);
-            }
-        }
-    });
-
-
-    // ============================================================
-    // FORGOT PASSWORD
-    // ============================================================
-
-    forgotLink.addEventListener('click', async event => {
-
-        event.preventDefault();
-
-        if (redirecting) return;
-
-        const email = emailInput.value.trim();
-
-
-        if (!email || !isValidEmail(email)) {
-
-            showFieldError(
-                'email',
-                'Nhập email hợp lệ để đặt lại mật khẩu'
-            );
-
-            emailInput.focus();
-
-            return;
-        }
-
-
-        try {
-
-            await sendPasswordResetEmail(
-                auth,
-                email
-            );
-
-            showToast(
-                'Email đặt lại mật khẩu đã được gửi. Kiểm tra cả thư rác.',
-                'success'
-            );
-
-        } catch (err) {
-
-            showToast(
-                mapAuthError(err.code),
-                'error'
-            );
-        }
-    });
-
-
-    // ============================================================
-    // GOOGLE LOGIN
-    // ============================================================
-
-    googleBtn.addEventListener('click', async () => {
-
-        if (redirecting) return;
-
-        try {
-
-            googleBtn.disabled = true;
-            facebookBtn.disabled = true;
-
-            await signInWithPopup(
-                auth,
-                googleProvider
-            );
-
-
-            redirecting = true;
-
-            showToast(
-                'Đăng nhập Google thành công',
-                'success'
-            );
-
-            window.location.replace('/dashboard');
-
-        } catch (err) {
-
-            const msg = mapAuthError(err.code);
-
-            if (msg) {
-                showToast(msg, 'error');
-            }
-
-        } finally {
-
-            if (!redirecting) {
-                googleBtn.disabled = false;
-                facebookBtn.disabled = false;
-            }
-        }
-    });
-
-
-    // ============================================================
-    // FACEBOOK LOGIN
-    // ============================================================
-
-    facebookBtn.addEventListener('click', async () => {
-
-        if (redirecting) return;
-
-        try {
-
-            googleBtn.disabled = true;
-            facebookBtn.disabled = true;
-
-            await signInWithPopup(
-                auth,
-                facebookProvider
-            );
-
-
-            redirecting = true;
-
-            showToast(
-                'Đăng nhập Facebook thành công',
-                'success'
-            );
-
-            window.location.replace('/dashboard');
-
-        } catch (err) {
-
-            const msg = mapAuthError(err.code);
-
-            if (msg) {
-                showToast(msg, 'error');
-            }
-
-        } finally {
-
-            if (!redirecting) {
-                googleBtn.disabled = false;
-                facebookBtn.disabled = false;
-            }
-        }
-    });
-
-
-    // ============================================================
-    // AUTH STATE
-    // ============================================================
-
-    /*
-     * QUAN TRỌNG:
-     *
-     * Điều kiện cũ:
-     *
-     * user && path.endsWith('/login.html') || path === '/login'
-     *
-     * bị hiểu thành:
-     *
-     * (user && login.html) || /login
-     *
-     * Vì vậy /login có thể redirect ngay cả khi chưa đăng nhập.
-     *
-     * Điều kiện mới:
-     *
-     * user && (login.html || /login)
-     */
-
-    onAuthStateChanged(auth, user => {
-
-        if (redirecting) return;
-
-        const path = window.location.pathname;
-
-        const isLoginPage =
-            path === '/login' ||
-            path === '/login/' ||
-            path.endsWith('/login.html');
-
-
-        if (user && isLoginPage) {
-
-            redirecting = true;
-
-            window.location.replace('/dashboard');
-        }
-    });
-
-</script>
-
+        });
+    </script>
 </body>
 </html>
+
+Lưu ý quan trọng: bản này không khóa Firebase session sau login. "signOut()" chỉ chạy sau đăng ký để người dùng xác minh email rồi đăng nhập lại; login Google/Facebook/email đều giữ session và chuyển ngay trên tab hiện tại sang "/dashboard".
+
+Nhưng để hết vòng lặp hoàn toàn, "dashboard" cũng phải kiểm tra Firebase bằng "onAuthStateChanged()" thay vì kiểm tra "auth.currentUser" ngay lúc vừa tải trang.
