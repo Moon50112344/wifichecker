@@ -32,12 +32,10 @@
             overflow-x: hidden;
         }
 
-        /* Nền glow + grid (giống Login) */
         body::before {
             content: '';
             position: fixed;
-            top: -50%;
-            left: 50%;
+            top: -50%; left: 50%;
             transform: translateX(-50%);
             width: 800px; height: 800px;
             background: radial-gradient(circle, rgba(47,139,255,0.10) 0%, transparent 70%);
@@ -58,39 +56,22 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .dashboard {
-            display: flex;
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
+        .dashboard { display: flex; min-height: 100vh; width: 100%; position: relative; z-index: 1; }
 
         /* ===== Sidebar ===== */
         .sidebar {
-            width: 240px;
-            flex-shrink: 0;
+            width: 240px; flex-shrink: 0;
             border-right: 1px solid var(--border);
             background: rgba(13,20,36,0.5);
             padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            position: sticky;
-            top: 0;
-            height: 100vh;
+            display: flex; flex-direction: column;
+            position: sticky; top: 0; height: 100vh;
         }
-
         .sidebar-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            padding: 0 8px;
-            margin-bottom: 32px;
-            text-decoration: none;
-            color: var(--text);
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 20px; font-weight: 700; letter-spacing: -0.5px;
+            padding: 0 8px; margin-bottom: 32px;
+            text-decoration: none; color: var(--text);
         }
         .sidebar-logo svg { width: 24px; height: 24px; flex-shrink: 0; }
         .sidebar-logo .studio { color: var(--blue); }
@@ -98,60 +79,37 @@
         .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 12px;
-            border-radius: 8px;
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            background: none;
-            font-family: inherit;
-            width: 100%;
-            text-align: left;
+            display: flex; align-items: center;
+            padding: 10px 12px; border-radius: 8px;
+            color: var(--muted); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+            border: none; background: none;
+            font-family: inherit; width: 100%; text-align: left;
         }
         .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
         .nav-item.active { background: rgba(47,139,255,0.10); color: var(--blue); }
 
         /* ===== Content ===== */
-        .content {
-            flex: 1;
-            padding: 32px;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
-        }
+        .content { flex: 1; padding: 32px; max-width: 900px; margin: 0 auto; width: 100%; }
 
         .view { display: none; animation: fadeIn 0.4s ease; }
         .view.active { display: block; }
 
         .view-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 24px;
         }
         .view-header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
 
         .btn-primary {
-            background: var(--blue);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
+            background: var(--blue); color: #fff; border: none;
+            padding: 10px 20px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
         }
         .btn-primary:hover:not(:disabled) {
-            background: var(--blue-hover);
-            transform: translateY(-1px);
+            background: var(--blue-hover); transform: translateY(-1px);
             box-shadow: 0 6px 16px rgba(47,139,255,0.25);
         }
         .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
@@ -160,32 +118,20 @@
         .card {
             background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 14px;
+            border-radius: 12px; padding: 20px; margin-bottom: 14px;
             transition: border-color 0.2s;
         }
         .card:hover { border-color: #2a3a5c; }
-
         .card-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
         .card-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
-
         .card-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            margin-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; margin-bottom: 8px;
         }
         .card-row .label { color: var(--muted); }
-
         .status-dot {
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-            background: var(--muted);
-            vertical-align: middle;
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            margin-right: 6px; background: var(--muted); vertical-align: middle;
         }
         .status-dot.online { background: var(--success); box-shadow: 0 0 6px rgba(46,204,113,0.5); }
 
@@ -193,74 +139,56 @@
             display: inline-block;
             background: rgba(255,255,255,0.04);
             border: 1px solid var(--border);
-            color: var(--text);
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            font-family: inherit;
-            transition: all 0.2s;
+            color: var(--text); padding: 6px 14px; border-radius: 6px;
+            font-size: 12px; font-weight: 500; cursor: pointer;
+            text-decoration: none; font-family: inherit; transition: all 0.2s;
         }
         .btn-app:hover { border-color: var(--blue); color: var(--blue); }
 
-        /* ===== Empty state ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--muted);
-            border: 1px dashed var(--border);
-            border-radius: 12px;
+        /* ===== Empty state (căn giữa) ===== */
+        #view-home { display: flex; flex-direction: column; min-height: calc(100vh - 64px); }
+        #checkerList { flex-shrink: 0; }
+        #emptyState {
+            flex: 1; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; border: none; padding: 0;
         }
-        .empty-state h2 { color: var(--text); font-size: 18px; margin-bottom: 8px; font-weight: 600; }
-        .empty-state p { font-size: 14px; margin-bottom: 20px; }
+        #emptyState.show { display: flex; }
+        #emptyState h2 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        #emptyState p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
 
-        /* ===== Form (đúng style Login) ===== */
-        .form-card { max-width: 420px; }
-        .form-group { margin-bottom: 18px; position: relative; }
+        /* ===== Form New (gọn) ===== */
+        #view-new .view-header { margin-bottom: 16px; }
+        .form-card { max-width: 400px; }
+        #view-new .form-group { margin-bottom: 14px; position: relative; }
+        #view-new #addBtn { margin-top: 6px; width: 100%; }
         .form-group label {
-            display: block;
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 8px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            display: block; font-size: 12px; color: var(--muted);
+            margin-bottom: 8px; font-weight: 500; letter-spacing: 0.3px;
         }
         .input-box { position: relative; display: flex; align-items: center; }
         .input-box svg {
-            position: absolute; left: 14px;
-            width: 18px; height: 18px;
-            color: var(--muted);
-            pointer-events: none;
-            transition: color 0.2s;
+            position: absolute; left: 14px; width: 18px; height: 18px;
+            color: var(--muted); pointer-events: none; transition: color 0.2s;
         }
         .input-box input {
-            width: 100%;
-            padding: 14px 14px 14px 44px;
+            width: 100%; padding: 14px 14px 14px 44px;
             background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 15px;
-            font-family: inherit;
+            border: 1px solid var(--border); border-radius: 10px;
+            color: var(--text); font-size: 15px; font-family: inherit;
             transition: all 0.2s;
         }
         .input-box input:focus {
-            outline: none;
-            border-color: var(--blue);
+            outline: none; border-color: var(--blue);
             background: rgba(47,139,255,0.04);
             box-shadow: 0 0 0 3px rgba(47,139,255,0.1);
         }
         .input-box input.field-error { border-color: var(--error); }
         .error-text { display: none; font-size: 12px; color: var(--error); margin-top: 6px; }
         .error-text.show { display: block; }
-
         .toggle-pass {
-            position: absolute; right: 12px;
-            background: none; border: none;
-            cursor: pointer; padding: 6px;
-            color: var(--muted);
+            position: absolute; right: 12px; background: none; border: none;
+            cursor: pointer; padding: 6px; color: var(--muted);
             display: flex; align-items: center;
         }
         .toggle-pass svg { position: static; width: 18px; height: 18px; }
@@ -269,31 +197,21 @@
         .info-card {
             background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px 20px;
-            margin-bottom: 20px;
+            border-radius: 12px; padding: 8px 20px; margin-bottom: 20px;
         }
         .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px;
         }
         .info-row:last-child { border-bottom: none; }
         .info-row .label { color: var(--muted); }
         .info-row .value { font-weight: 500; word-break: break-all; text-align: right; }
 
         .setting-section { margin-bottom: 28px; }
-        .setting-section h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+        .setting-section h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
         .setting-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px;
         }
         .setting-row:last-child { border-bottom: none; }
         .setting-row .label { color: var(--muted); }
@@ -301,68 +219,52 @@
 
         .btn-ghost {
             background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
+            border: 1px solid var(--border); color: var(--text);
+            padding: 8px 16px; border-radius: 8px;
+            font-size: 13px; font-weight: 500; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
         }
         .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
 
         .btn-danger {
             background: transparent;
             border: 1px solid rgba(255,107,107,0.4);
-            color: var(--error);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
+            color: var(--error); padding: 10px 20px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
         }
         .btn-danger:hover { background: rgba(255,107,107,0.08); }
 
-        /* ===== Toast (giống Login) ===== */
+        .skeleton-box {
+            text-align: center; padding: 60px 20px;
+            color: var(--muted);
+            border: 1px dashed var(--border); border-radius: 12px;
+        }
+        .skeleton-box h2 { color: var(--text); font-size: 18px; margin-bottom: 8px; font-weight: 600; }
+        .skeleton-box p { font-size: 14px; }
+
+        /* ===== Toast ===== */
         .toast {
-            position: fixed;
-            bottom: 30px; left: 50%;
+            position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #16203a;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            z-index: 100;
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            max-width: 90vw;
+            background: #16203a; border: 1px solid var(--border);
+            color: var(--text); padding: 12px 20px; border-radius: 10px;
+            font-size: 14px; z-index: 100; transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); max-width: 90vw;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.error { border-color: var(--error); }
         .toast.success { border-color: var(--success); }
 
-        /* ===== Responsive: sidebar thành thanh ngang trên mobile ===== */
+        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .dashboard { flex-direction: column; }
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: sticky;
-                top: 0;
-                flex-direction: row;
-                align-items: center;
-                padding: 12px 16px;
-                border-right: none;
+                width: 100%; height: auto; position: sticky; top: 0;
+                flex-direction: row; align-items: center;
+                padding: 12px 16px; border-right: none;
                 border-bottom: 1px solid var(--border);
-                gap: 12px;
-                z-index: 10;
-                overflow-x: auto;
+                gap: 12px; z-index: 10; overflow-x: auto;
             }
             .sidebar-logo { margin-bottom: 0; flex-shrink: 0; font-size: 17px; }
             .sidebar-nav { flex-direction: row; gap: 4px; flex: 1; overflow-x: auto; }
@@ -401,8 +303,8 @@
                     <button class="btn-primary" data-goto="new">New</button>
                 </div>
                 <div id="checkerList"></div>
-                <div id="emptyState" class="empty-state" style="display:none">
-                    <h2>No Wifi Checker</h2>
+                <div id="emptyState">
+                    <h2>No app yet</h2>
                     <p>Bạn chưa thêm Wifi Checker nào.</p>
                     <button class="btn-primary" data-goto="new">New</button>
                 </div>
@@ -447,7 +349,7 @@
                             </div>
                             <span class="error-text" id="checkerPassError"></span>
                         </div>
-                        <button type="submit" class="btn-primary" id="addBtn" style="width:100%">Add</button>
+                        <button type="submit" class="btn-primary" id="addBtn">Add</button>
                     </form>
                 </div>
             </section>
@@ -464,12 +366,12 @@
                 <button class="btn-danger" data-signout>Sign out</button>
             </section>
 
-            <!-- FRIEND (skeleton - chưa có backend) -->
+            <!-- FRIEND (skeleton) -->
             <section id="view-friend" class="view">
                 <div class="view-header"><h1>Friend</h1></div>
-                <div class="empty-state">
+                <div class="skeleton-box">
                     <h2>Friend</h2>
-                    <p>Tính năng bạn bè đang được phát triển — cần backend/hệ thống kết bạn. Chưa thể triển khai, tôi không tạo dữ liệu giả.</p>
+                    <p>Tính năng bạn bè đang được phát triển — cần backend kết bạn. Chưa triển khai, không tạo dữ liệu giả.</p>
                 </div>
             </section>
 
@@ -511,12 +413,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail,
+                 setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-        // ============================================================
-        //  ===== FIREBASE CONFIG — thay bằng config project của bạn =====
-        // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDlTcZfcnoftOYIGEXPcmr_3g9pYcms3V8",
             authDomain: "wifichecker-ccf9b.firebaseapp.com",
@@ -530,6 +430,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // Ép lưu phiên vào localStorage (chống workers.dev làm mất phiên)
+        setPersistence(auth, browserLocalPersistence).catch(() => {});
 
         // ===== DOM =====
         const toast = document.getElementById('toast');
@@ -556,7 +459,7 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // ===== Chuyển view (không reload trang) =====
+        // ===== Chuyển view (không reload) =====
         function showView(name) {
             views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
             navItems.forEach(n => n.classList.toggle('active', n.dataset.view === name));
@@ -582,8 +485,13 @@
             return d.innerHTML;
         }
 
-        // ===== Auth guard: chưa đăng nhập → /login =====
+        // ============================================================
+        //  AUTH GUARD — CHỈ KIỂM TRA 1 LẦN, KHÔNG TỰ ĐÁ VỀ LOGIN SAU NỮA
+        // ============================================================
+        let dashboardChecked = false;
         onAuthStateChanged(auth, (user) => {
+            if (dashboardChecked) return;   // bỏ qua mọi lần sau → hết lỗi 10s tự về login
+            dashboardChecked = true;
             if (!user) {
                 window.location.replace('/login');
                 return;
@@ -593,7 +501,7 @@
             loadCheckers(user.uid);
         });
 
-        // ===== Tải danh sách Wifi Checker của user hiện tại (real-time) =====
+        // ===== Tải danh sách Wifi Checker (real-time) =====
         // Cấu trúc: users/{uid}/wifiCheckers/{checkerId}
         function loadCheckers(uid) {
             if (unsubCheckers) unsubCheckers();
@@ -601,11 +509,11 @@
             unsubCheckers = onSnapshot(q, (snap) => {
                 checkerList.innerHTML = '';
                 if (snap.empty) {
-                    emptyState.style.display = 'block';
+                    emptyState.classList.add('show');
                     checkerList.style.display = 'none';
                     return;
                 }
-                emptyState.style.display = 'none';
+                emptyState.classList.remove('show');
                 checkerList.style.display = 'block';
                 snap.forEach((docSnap) => {
                     const data = docSnap.data();
@@ -689,14 +597,14 @@
         async function doSignOut() {
             try {
                 await signOut(auth);
-                window.location.href = '/login';
+                window.location.replace('/login');
             } catch (err) {
                 showToast('Đăng xuất thất bại', 'error');
             }
         }
         document.querySelectorAll('[data-signout]').forEach(b => b.addEventListener('click', doSignOut));
 
-        // ===== Security: gửi email reset mật khẩu (Firebase thật) =====
+        // ===== Security: gửi email reset mật khẩu =====
         document.getElementById('resetPassBtn').addEventListener('click', async () => {
             if (!currentUser || !currentUser.email) return;
             try {
