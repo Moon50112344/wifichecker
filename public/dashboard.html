@@ -101,6 +101,11 @@
             margin-bottom: 24px;
         }
         .view-header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
+        .view-header h1 .count {
+            font-size: 13px; font-weight: 500; color: var(--muted);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            padding: 2px 10px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
+        }
 
         .btn-primary {
             background: var(--blue); color: #fff; border: none;
@@ -114,38 +119,73 @@
         }
         .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
 
-        /* ===== Card Wifi Checker ===== */
+        /* ===== Card Wifi Checker (nâng cấp nhẹ) ===== */
+        #checkerList { width: 100%; }
         .card {
             background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
             border-radius: 12px; padding: 20px; margin-bottom: 14px;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-        .card:hover { border-color: #2a3a5c; }
+        .card:hover {
+            border-color: #2a3a5c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .card-head {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 14px;
+        }
         .card-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-        .card-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+        .card-sub { font-size: 12px; color: var(--muted); }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 12px; font-weight: 500;
+            padding: 4px 10px; border-radius: 20px;
+            background: rgba(107,119,148,0.1); color: var(--muted);
+            border: 1px solid rgba(107,119,148,0.2);
+        }
+        .status-badge.online {
+            background: rgba(46,204,113,0.1); color: var(--success);
+            border-color: rgba(46,204,113,0.25);
+        }
+        .status-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--muted); flex-shrink: 0;
+        }
+        .status-badge.online .status-dot {
+            background: var(--success);
+            box-shadow: 0 0 6px rgba(46,204,113,0.6);
+        }
+
         .card-row {
             display: flex; justify-content: space-between; align-items: center;
-            font-size: 13px; margin-bottom: 8px;
+            font-size: 13px; padding: 6px 0;
+            border-top: 1px solid rgba(30,42,68,0.5);
         }
         .card-row .label { color: var(--muted); }
-        .status-dot {
-            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
-            margin-right: 6px; background: var(--muted); vertical-align: middle;
-        }
-        .status-dot.online { background: var(--success); box-shadow: 0 0 6px rgba(46,204,113,0.5); }
+        .card-row .value { font-weight: 500; }
 
+        .card-foot {
+            display: flex; justify-content: flex-end; margin-top: 14px;
+        }
         .btn-app {
-            display: inline-block;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            color: var(--text); padding: 6px 14px; border-radius: 6px;
-            font-size: 12px; font-weight: 500; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(47,139,255,0.08);
+            border: 1px solid rgba(47,139,255,0.3);
+            color: var(--blue); padding: 7px 18px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
             text-decoration: none; font-family: inherit; transition: all 0.2s;
         }
-        .btn-app:hover { border-color: var(--blue); color: var(--blue); }
+        .btn-app:hover {
+            background: var(--blue); color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(47,139,255,0.3);
+        }
+        .btn-app svg { width: 14px; height: 14px; }
 
-        /* ===== Empty state (căn giữa) ===== */
+        /* ===== Empty state (căn giữa + icon) ===== */
         #view-home { display: flex; flex-direction: column; min-height: calc(100vh - 64px); }
         #checkerList { flex-shrink: 0; }
         #emptyState {
@@ -154,8 +194,30 @@
             text-align: center; border: none; padding: 0;
         }
         #emptyState.show { display: flex; }
+        #emptyState .empty-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            background: rgba(47,139,255,0.08);
+            border: 1px solid rgba(47,139,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 18px; color: var(--blue);
+        }
+        #emptyState .empty-icon svg { width: 26px; height: 26px; }
         #emptyState h2 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
         #emptyState p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+
+        /* ===== Lỗi tải dữ liệu (hiện rõ tại Home, không còn trống im lặng) ===== */
+        #loadError {
+            display: none;
+            background: rgba(255,107,107,0.06);
+            border: 1px solid rgba(255,107,107,0.3);
+            border-radius: 12px; padding: 18px 20px;
+            font-size: 13px; color: var(--error); line-height: 1.6;
+        }
+        #loadError.show { display: block; }
+        #loadError code {
+            background: rgba(255,255,255,0.06); padding: 2px 6px;
+            border-radius: 4px; font-size: 12px;
+        }
 
         /* ===== Form New (gọn) ===== */
         #view-new .view-header { margin-bottom: 16px; }
@@ -276,7 +338,6 @@
 </head>
 <body>
     <div class="dashboard">
-        <!-- ===== Sidebar ===== -->
         <aside class="sidebar">
             <a href="/" class="sidebar-logo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#2f8bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -293,17 +354,24 @@
             </nav>
         </aside>
 
-        <!-- ===== Content ===== -->
         <main class="content">
 
             <!-- HOME -->
             <section id="view-home" class="view active">
                 <div class="view-header">
-                    <h1>Home</h1>
+                    <h1>Home<span class="count" id="appCount">0</span></h1>
                     <button class="btn-primary" data-goto="new">New</button>
                 </div>
+                <div id="loadError"></div>
                 <div id="checkerList"></div>
                 <div id="emptyState">
+                    <div class="empty-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
                     <h2>No app yet</h2>
                     <p>Bạn chưa thêm Wifi Checker nào.</p>
                     <button class="btn-primary" data-goto="new">New</button>
@@ -366,7 +434,7 @@
                 <button class="btn-danger" data-signout>Sign out</button>
             </section>
 
-            <!-- FRIEND (skeleton) -->
+            <!-- FRIEND -->
             <section id="view-friend" class="view">
                 <div class="view-header"><h1>Friend</h1></div>
                 <div class="skeleton-box">
@@ -378,7 +446,6 @@
             <!-- SETTING -->
             <section id="view-setting" class="view">
                 <div class="view-header"><h1>Settings</h1></div>
-
                 <div class="setting-section">
                     <h3>Account</h3>
                     <div class="info-card">
@@ -386,14 +453,12 @@
                         <div class="info-row"><span class="label">UID</span><span class="value" id="settingUid">—</span></div>
                     </div>
                 </div>
-
                 <div class="setting-section">
                     <h3>Appearance</h3>
                     <div class="info-card">
                         <div class="setting-row"><span class="label">Giao diện</span><span class="text-muted">Dark theme (mặc định) — chưa hỗ trợ đổi theme</span></div>
                     </div>
                 </div>
-
                 <div class="setting-section">
                     <h3>Security</h3>
                     <div class="info-card">
@@ -430,16 +495,15 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
-        // Ép lưu phiên vào localStorage (chống workers.dev làm mất phiên)
         setPersistence(auth, browserLocalPersistence).catch(() => {});
 
-        // ===== DOM =====
         const toast = document.getElementById('toast');
         const navItems = document.querySelectorAll('.nav-item');
         const views = document.querySelectorAll('.view');
         const checkerList = document.getElementById('checkerList');
         const emptyState = document.getElementById('emptyState');
+        const loadError = document.getElementById('loadError');
+        const appCount = document.getElementById('appCount');
         const addForm = document.getElementById('addForm');
         const addBtn = document.getElementById('addBtn');
         const checkerUser = document.getElementById('checkerUser');
@@ -448,7 +512,6 @@
         let currentUser = null;
         let unsubCheckers = null;
 
-        // ===== Toast =====
         let toastTimer;
         function showToast(msg, type) {
             toast.textContent = msg;
@@ -456,10 +519,9 @@
             if (type) toast.classList.add(type);
             toast.classList.add('show');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ===== Chuyển view (không reload) =====
         function showView(name) {
             views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
             navItems.forEach(n => n.classList.toggle('active', n.dataset.view === name));
@@ -467,7 +529,6 @@
         navItems.forEach(n => n.addEventListener('click', () => showView(n.dataset.view)));
         document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => showView(b.dataset.goto)));
 
-        // ===== Toggle mật khẩu form Add =====
         const toggleCP = document.getElementById('toggleCheckerPass');
         const cEyeOn = document.getElementById('cEyeOn');
         const cEyeOff = document.getElementById('cEyeOff');
@@ -485,29 +546,26 @@
             return d.innerHTML;
         }
 
-        // ============================================================
-        //  AUTH GUARD — CHỈ KIỂM TRA 1 LẦN, KHÔNG TỰ ĐÁ VỀ LOGIN SAU NỮA
-        // ============================================================
+        // ===== AUTH GUARD — chỉ kiểm tra 1 lần =====
         let dashboardChecked = false;
         onAuthStateChanged(auth, (user) => {
-            if (dashboardChecked) return;   // bỏ qua mọi lần sau → hết lỗi 10s tự về login
+            if (dashboardChecked) return;
             dashboardChecked = true;
-            if (!user) {
-                window.location.replace('/login');
-                return;
-            }
+            if (!user) { window.location.replace('/login'); return; }
             currentUser = user;
             renderProfile(user);
             loadCheckers(user.uid);
         });
 
-        // ===== Tải danh sách Wifi Checker (real-time) =====
-        // Cấu trúc: users/{uid}/wifiCheckers/{checkerId}
+        // ===== Tải danh sách Wifi Checker =====
         function loadCheckers(uid) {
             if (unsubCheckers) unsubCheckers();
             const q = query(collection(db, 'users', uid, 'wifiCheckers'), orderBy('createdAt', 'desc'));
             unsubCheckers = onSnapshot(q, (snap) => {
+                loadError.classList.remove('show');
+                loadError.innerHTML = '';
                 checkerList.innerHTML = '';
+                appCount.textContent = snap.size;
                 if (snap.empty) {
                     emptyState.classList.add('show');
                     checkerList.style.display = 'none';
@@ -521,20 +579,40 @@
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.innerHTML = `
-                        <div class="card-title">Wifi Checker</div>
-                        <div class="card-sub">Moon Studio</div>
-                        <div class="card-row"><span class="label">Username:</span><span>${escapeHtml(data.username)}</span></div>
-                        <div class="card-row">
-                            <span class="label">Status:</span>
-                            <span><span class="status-dot ${isOnline ? 'online' : ''}"></span>${isOnline ? 'Online' : 'Offline'}</span>
+                        <div class="card-head">
+                            <div>
+                                <div class="card-title">Wifi Checker</div>
+                                <div class="card-sub">Moon Studio</div>
+                            </div>
+                            <span class="status-badge ${isOnline ? 'online' : ''}">
+                                <span class="status-dot"></span>${isOnline ? 'Online' : 'Offline'}
+                            </span>
                         </div>
-                        <div style="text-align:right; margin-top:12px;">
-                            <a class="btn-app" href="/webremote.html?id=${encodeURIComponent(docSnap.id)}" target="_blank" rel="noopener">[- App]</a>
+                        <div class="card-row"><span class="label">Username</span><span class="value">${escapeHtml(data.username)}</span></div>
+                        <div class="card-foot">
+                            <a class="btn-app" href="/webremote.html?id=${encodeURIComponent(docSnap.id)}" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" y1="14" x2="21" y2="3"/>
+                                </svg>
+                                App
+                            </a>
                         </div>`;
                     checkerList.appendChild(card);
                 });
             }, (err) => {
-                showToast('Lỗi tải danh sách: ' + err.message, 'error');
+                // Lỗi đọc dữ liệu — hiện rõ nguyên nhân, không để Home trống im lặng
+                appCount.textContent = '0';
+                emptyState.classList.remove('show');
+                checkerList.style.display = 'none';
+                loadError.classList.add('show');
+                if (err.code === 'permission-denied') {
+                    loadError.innerHTML = 'Không đọc được dữ liệu do <b>Firestore Rules chưa đặt</b> hoặc sai. Vào Firebase Console → Firestore → Rules, dán:<br><br><code>rules_version = \'2\';<br>service cloud.firestore {<br>&nbsp;&nbsp;match /databases/{database}/documents {<br>&nbsp;&nbsp;&nbsp;&nbsp;match /users/{uid}/{document=**} {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if request.auth != null &amp;&amp; request.auth.uid == uid;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code><br><br>Sau đó bấm <b>Publish</b> và tải lại trang.';
+                } else {
+                    loadError.textContent = 'Lỗi tải dữ liệu: ' + err.message;
+                }
+                showToast('Lỗi tải danh sách', 'error');
             });
         }
 
@@ -542,7 +620,7 @@
         addForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = checkerUser.value.trim();
-            const password = checkerPass.value; // credential thiết bị — KHÔNG log ra console
+            const password = checkerPass.value;
             let ok = true;
             document.getElementById('checkerUserError').classList.remove('show');
             document.getElementById('checkerPassError').classList.remove('show');
@@ -567,8 +645,8 @@
             try {
                 await addDoc(collection(db, 'users', currentUser.uid, 'wifiCheckers'), {
                     username: username,
-                    password: password, // lưu credential thiết bị, KHÔNG in ra console/log
-                    status: 'offline',  // mặc định offline; thiết bị tự cập nhật khi online
+                    password: password,
+                    status: 'offline',
                     createdAt: serverTimestamp()
                 });
                 showToast('Wifi Checker added', 'success');
@@ -582,7 +660,6 @@
             }
         });
 
-        // ===== Profile =====
         function renderProfile(user) {
             const email = user.email || '—';
             document.getElementById('profileEmail').textContent = email;
@@ -593,7 +670,6 @@
             document.getElementById('profileCreated').textContent = (user.metadata && user.metadata.creationTime) || '—';
         }
 
-        // ===== Sign out =====
         async function doSignOut() {
             try {
                 await signOut(auth);
@@ -604,7 +680,6 @@
         }
         document.querySelectorAll('[data-signout]').forEach(b => b.addEventListener('click', doSignOut));
 
-        // ===== Security: gửi email reset mật khẩu =====
         document.getElementById('resetPassBtn').addEventListener('click', async () => {
             if (!currentUser || !currentUser.email) return;
             try {
