@@ -3,9 +3,17 @@
   "name": "aetherdroid-lnukl02kel3ita2vy4bw8",
   "main": "worker/index.js",
   "compatibility_date": "2025-04-24",
+
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
-  }
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "86dc7fb1-83f1-4492-a7c4-a43b1cbcdcdd"
+    }
+  ]
 }
