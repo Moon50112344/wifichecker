@@ -590,7 +590,9 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail,
                  setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+        // ===== D1: không còn dùng Firestore =====
+        // Dữ liệu lấy qua Worker API /api/* (worker/index.js) — xác thực bằng Firebase ID token.
+        // "Realtime" đạt được bằng polling mỗi 4s (D1 không có realtime native).
 
         const firebaseConfig = {
             apiKey: "AIzaSyDlTcZfcnoftOYIGEXPcmr_3g9pYcms3V8",
@@ -604,7 +606,6 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         setPersistence(auth, browserLocalPersistence).catch(() => {});
 
         const toast = document.getElementById('toast');
@@ -621,8 +622,8 @@
         const loadingState = document.getElementById('loadingState');
 
         let currentUser = null;
-        let unsubCheckers = null;
-        let toastTimer;
+        let pollTimer = null;
+        let firstLoad = true; // chỉ hiện loading spinner ở lần tải đầu tiên
 
         function showToast(msg, type) {
             toast.textContent = msg;
@@ -635,6 +636,7 @@
                 setTimeout(() => toast.className = 'toast', 200);
             }, 3000);
         }
+        let toastTimer;
 
         function showView(name) {
             views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
@@ -659,46 +661,28 @@
             return d.innerHTML;
         }
 
-        // ===== AUTH GUARD — chỉ kiểm tra 1 lần =====
-        let dashboardChecked = false;
-        onAuthStateChanged(auth, (user) => {
-            if (dashboardChecked) return;
-            dashboardChecked = true;
-            if (!user) { window.location.replace('/login'); return; }
-            currentUser = user;
-            renderProfile(user);
-            loadCheckers(user.uid);
-        });
-
-        // ===== Tải danh sách — HIỆN NGAY, KHÔNG TRỄ =====
-        function loadCheckers(uid) {
-            if (unsubCheckers) unsubCheckers();
-            // Reset TRƯỚC khi nhận dữ liệu → không để trống trễ
-            loadError.classList.remove('show');
-            loadError.innerHTML = '';
-            checkerList.innerHTML = '';
-            appCount.textContent = '0';
-            emptyState.classList.remove('show');
-            loadingState.classList.add('show'); // hiện loading khi chờ snapshot đầu tiên
-
-            const q = query(collection(db, 'users', uid, 'wifiCheckers'), orderBy('createdAt', 'desc'));
-            unsubCheckers = onSnapshot(q, (snap) => {
-                appCount.textContent = snap.size;
-                checkerList.innerHTML = '';
-                emptyState.classList.remove('show');
-                loadingState.classList.remove('show'); // đã có dữ liệu → ẩn loading
-
-                if (snap.empty) {
-                    emptyState.classList.add('show');
-                    return;
+        // ===== Gọi API D1, kèm Firebase ID token =====
+        async function api(path, options = {}) {
+            const token = await currentUser.getIdToken();
+            const res = await fetch('/api' + path, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                    ...(options.headers || {})
                 }
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || ('Lỗi ' + res.status));
+            return data;
+        }
 
-                snap.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const isOnline = data.status === 'online';
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
+        // ===== Render 1 card (giữ nguyên giao diện cũ) =====
+        function renderCard(item) {
+            const isOnline = item.status === 'online';
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
                         <div class="card-head">
                             <div>
                                 <div class="card-title">Wifi Checker</div>
@@ -708,7 +692,7 @@
                                 <span class="status-dot"></span>${isOnline ? 'Online' : 'Offline'}
                             </span>
                         </div>
-                        <div class="card-row"><span class="label">Username</span><span class="value">${escapeHtml(data.username)}</span></div>
+                        <div class="card-row"><span class="label">Username</span><span class="value">${escapeHtml(item.username)}</span></div>
                         <div class="card-foot">
                             <button type="button" class="btn-delete" aria-label="Xóa Wifi Checker này">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -719,8 +703,8 @@
                                 </svg>
                                 Xóa
                             </button>
-                            <a class="btn-app" href="/webremote.html?id=${encodeURIComponent(docSnap.id)}" target="_blank" rel="noopener">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <a class="btn-app" href="/webremote.html?id=${encodeURIComponent(item.id)}" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                                     <polyline points="15 3 21 3 21 9"/>
                                     <line x1="10" y1="14" x2="21" y2="3"/>
@@ -728,34 +712,72 @@
                                 App
                             </a>
                         </div>`;
-                    // Nút Xóa — tính năng mới user yêu cầu, giữ nguyên logic cũ
-                    card.querySelector('.btn-delete').addEventListener('click', async () => {
-                        if (!confirm('Xóa Wifi Checker này? Hành động không thể hoàn tác.')) return;
-                        try {
-                            await deleteDoc(doc(db, 'users', currentUser.uid, 'wifiCheckers', docSnap.id));
-                            showToast('Đã xóa.', 'success');
-                        } catch (err) {
-                            showToast('Xóa thất bại: ' + err.message, 'error');
-                        }
-                    });
-                    checkerList.appendChild(card);
-                });
-            }, (err) => {
-                appCount.textContent = '0';
-                emptyState.classList.remove('show');
-                loadingState.classList.remove('show'); // có lỗi → ẩn loading
-                checkerList.innerHTML = '';
-                loadError.classList.add('show');
-                if (err.code === 'permission-denied') {
-                    loadError.innerHTML = '<strong>Firestore Rules chưa đặt!</strong><br>Vào Firebase Console → Firestore → Rules, dán đoạn sau rồi bấm Publish:<br><br><code>rules_version = \'2\';<br>service cloud.firestore {<br>&nbsp;&nbsp;match /databases/{database}/documents {<br>&nbsp;&nbsp;&nbsp;&nbsp;match /users/{uid}/{document=**} {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if request.auth != null && request.auth.uid == uid;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code>';
-                } else {
-                    loadError.textContent = 'Lỗi tải dữ liệu: ' + err.message;
+            card.querySelector('.btn-delete').addEventListener('click', async () => {
+                if (!confirm('Xóa Wifi Checker này? Hành động không thể hoàn tác.')) return;
+                try {
+                    await api('/checkers/' + encodeURIComponent(item.id), { method: 'DELETE' });
+                    showToast('Đã xóa.', 'success');
+                    loadCheckers();
+                } catch (err) {
+                    showToast('Xóa thất bại: ' + err.message, 'error');
                 }
-                showToast('Không tải được dữ liệu', 'error');
             });
+            checkerList.appendChild(card);
         }
 
-        // ===== Thêm mới =====
+        // ===== AUTH GUARD — chỉ kiểm tra 1 lần (giữ nguyên logic cũ) =====
+        let dashboardChecked = false;
+        onAuthStateChanged(auth, (user) => {
+            if (dashboardChecked) return;
+            dashboardChecked = true;
+            if (!user) { window.location.replace('/login'); return; }
+            currentUser = user;
+            renderProfile(user);
+            firstLoad = true;
+            loadCheckers();
+            if (pollTimer) clearInterval(pollTimer);
+            pollTimer = setInterval(loadCheckers, 4000); // "realtime": polling D1 mỗi 4s
+        });
+
+        // ===== Tải danh sách từ D1 =====
+        async function loadCheckers() {
+            if (firstLoad) {
+                loadError.classList.remove('show');
+                loadError.innerHTML = '';
+                checkerList.innerHTML = '';
+                appCount.textContent = '0';
+                emptyState.classList.remove('show');
+                loadingState.classList.add('show');
+            }
+            try {
+                const data = await api('/checkers');
+                const list = data.checkers || [];
+                appCount.textContent = list.length;
+                checkerList.innerHTML = '';
+                emptyState.classList.remove('show');
+                loadingState.classList.remove('show');
+                firstLoad = false;
+
+                if (list.length === 0) {
+                    emptyState.classList.add('show');
+                    return;
+                }
+                list.forEach(renderCard);
+            } catch (err) {
+                if (firstLoad) {
+                    loadingState.classList.remove('show');
+                    appCount.textContent = '0';
+                    emptyState.classList.remove('show');
+                    checkerList.innerHTML = '';
+                    loadError.classList.add('show');
+                    loadError.textContent = 'Lỗi tải dữ liệu: ' + err.message;
+                    showToast('Không tải được dữ liệu', 'error');
+                }
+                // Nếu là poll lỗi (không phải lần đầu): giữ nguyên dữ liệu cũ, không xóa
+            }
+        }
+
+        // ===== Thêm mới — POST /api/checkers =====
         addForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = checkerUser.value.trim();
@@ -782,12 +804,16 @@
             addBtn.disabled = true;
             addBtn.textContent = 'Đang xử lý...';
             try {
-                await addDoc(collection(db, 'users', currentUser.uid, 'wifiCheckers'), {
-                    username, password, status: 'offline', createdAt: serverTimestamp()
-                });
+                await api('/checkers', { method: 'POST', body: JSON.stringify({ username, password }) });
                 showToast('Thêm thành công!', 'success');
                 addForm.reset();
+                // Reset ô mật khẩu về dạng ẩn (trước đây nếu đang hiện chữ thì reset vẫn để hiện)
+                checkerPass.type = 'password';
+                cEyeOn.style.display = '';
+                cEyeOff.style.display = 'none';
                 showView('home');
+                firstLoad = false;
+                loadCheckers();
             } catch (err) {
                 showToast('Thêm thất bại: ' + err.message, 'error');
             } finally {
