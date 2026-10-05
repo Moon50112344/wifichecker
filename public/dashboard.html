@@ -214,7 +214,7 @@
         }
 
         /* ===== Form New ===== */
-        .form-card { max-width: 400px; }
+        .form-card { max-width: 400px; margin: 0 auto; } /* FIX giao diện: căn giữa form, không để trống bên phải */
         .form-group { margin-bottom: 14px; position: relative; }
         .form-group label {
             display: block; font-size: 12px; color: var(--muted);
@@ -300,7 +300,7 @@
         /* ===== Toast ===== */
         .toast {
             position: fixed; bottom: 30px; left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(100px); /* FIX bug: ẩn mặc định dưới màn hình, tránh viên toast trống hiện mãi */
             background: #16203a; border: 1px solid var(--border);
             color: var(--text); padding: 12px 20px; border-radius: 10px;
             font-size: 14px; z-index: 100;
@@ -415,6 +415,19 @@
         @media (min-width: 1025px) {
             .sidebar { height: 100dvh; }
         }
+
+        /* ===== Loading spinner (đã được user phép thêm) — chỉ hiện khi chờ dữ liệu lần đầu ===== */
+        #loadingState { display: none; text-align: center; padding: 8vh 20px; color: var(--muted); }
+        #loadingState.show { display: block; }
+        .spinner {
+            width: 36px; height: 36px; margin: 0 auto 14px;
+            border: 3px solid rgba(47,139,255,0.15);
+            border-top-color: var(--blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loadingState p { font-size: 14px; }
     </style>
 </head>
 <body>
@@ -444,6 +457,10 @@
                 </div>
                 <div id="loadError" aria-live="polite"></div>
                 <div id="checkerList"></div>
+                <div id="loadingState" role="status">
+                    <div class="spinner"></div>
+                    <p>Đang tải dữ liệu...</p>
+                </div>
                 <div id="emptyState">
                     <div class="empty-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -581,6 +598,7 @@
         const addBtn = document.getElementById('addBtn');
         const checkerUser = document.getElementById('checkerUser');
         const checkerPass = document.getElementById('checkerPass');
+        const loadingState = document.getElementById('loadingState');
 
         let currentUser = null;
         let unsubCheckers = null;
@@ -641,12 +659,14 @@
             checkerList.innerHTML = '';
             appCount.textContent = '0';
             emptyState.classList.remove('show');
+            loadingState.classList.add('show'); // hiện loading khi chờ snapshot đầu tiên
 
             const q = query(collection(db, 'users', uid, 'wifiCheckers'), orderBy('createdAt', 'desc'));
             unsubCheckers = onSnapshot(q, (snap) => {
                 appCount.textContent = snap.size;
                 checkerList.innerHTML = '';
                 emptyState.classList.remove('show');
+                loadingState.classList.remove('show'); // đã có dữ liệu → ẩn loading
 
                 if (snap.empty) {
                     emptyState.classList.add('show');
@@ -684,6 +704,7 @@
             }, (err) => {
                 appCount.textContent = '0';
                 emptyState.classList.remove('show');
+                loadingState.classList.remove('show'); // có lỗi → ẩn loading
                 checkerList.innerHTML = '';
                 loadError.classList.add('show');
                 if (err.code === 'permission-denied') {
